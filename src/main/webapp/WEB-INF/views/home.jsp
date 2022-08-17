@@ -6,9 +6,9 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello Book! 
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P>  책 쇼핑몰 프로젝트 입니다 </P>
 </body>
 </html>
