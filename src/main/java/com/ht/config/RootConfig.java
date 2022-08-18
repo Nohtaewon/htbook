@@ -15,7 +15,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"com.ht.controller"})
+@ComponentScan(basePackages = {"com.ht.*"})
 @MapperScan(basePackages = {"com.ht.mapper"})
 public class RootConfig {
 	  @Bean

@@ -12,8 +12,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc //설정이 완료된 여러 스프링 빈을 추가해준다.
-@ComponentScan(basePackages = {"a.b.controller"})
-@ComponentScan(basePackages = {"a.b.exception"} )
+@ComponentScan(basePackages = {"com.ht.*"})
+
 public class ServletConfig implements WebMvcConfigurer {
 	
 	@Override
