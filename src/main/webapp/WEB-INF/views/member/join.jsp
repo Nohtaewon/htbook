@@ -12,8 +12,59 @@ $(document).ready(function(){
 		$("#join_form").submit();
 		console.log("test");
 	});
+	
+	// propertychange change keyup paste input : 이벤트 변화감지
+	$('.id_input').on("propertychange change keyup paste input", function(){
+		
+		//console.log("keyup 테스트");
+		
+		// 아이디 체크 Ajax 처리
+		const member_id = $('.id_input').val();
+		const data = {member_id: member_id}
+
+		$.ajax({
+			type :"post",
+			url: "/member/memberIdChk", 
+			data : data,
+			success: function(result){
+				//console.log("성공 여부" + result);
+				if(result == 'success'){
+					$('.id_input_re_Success').css("display","inline-block");
+					$('.id_input_re_Erorr').css("display","none")
+					
+				} else if(result == 'fali'){
+					$('.id_input_re_Erorr').css("display","inline-block");
+					$('.id_input_re_Success').css("display","none")
+					
+				}
+				
+				
+			}
+		});
+		
+	});
+	// ajax 종료
+	
+
+	
 });
 </script>
+
+<style type="text/css">
+/*중복 아이디 존재하지 않는 경우*/
+.id_input_re_Success{
+	color: green;
+	display : none;
+}	
+	/*중복 아이디 존재 하는경우*/
+.id_input_re_Erorr{
+	color: red;
+	display : none;
+}
+
+}
+
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -30,6 +81,8 @@ $(document).ready(function(){
 					<div class="id_input_box">
 						<input class="id_input" name="member_id">
 					</div>
+					<span class="id_input_re_Success">사용 가능한 아이디입니다.</span>
+					<span class="id_input_re_Erorr">이미 존재하는 아이디입니다.</span>
 				
 				</div>
 				

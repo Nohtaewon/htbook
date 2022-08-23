@@ -6,5 +6,9 @@
  	<insert id="memberJoin">
  		insert into book_member values(#{member_id}, #{member_pw}, #{member_name}, #{member_mail}, #{member_addr1}, #{member_addr2}, #{member_addr3}, 0, sysdate, 100000, 5000 )
  	</insert>
-
+	
+	<select id="idCheck" resultType="int">
+		select count(*) from book_member where member_id =#{member_id}
+	</select>
+	
  </mapper>
