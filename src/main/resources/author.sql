@@ -1,29 +1,40 @@
+drop table nation;
+drop table author;
+drop sequence author_seq;
+
 -- 국가 테이블 생성
 create table nation(
-   nation_id varchar2(2) primary key,
-   nation_name varchar2(50)
+   nationId varchar2(2) primary key,
+   nationName varchar2(50)
 );
  
 -- 국가 테이블 데이터 삽입
 insert into nation values ('01', '국내');
 insert into nation values ('02', '국외');
 
-create sequence author_seq start with 1 increment by 1;
+create sequence authorSeq increment by 1 start with 1 nomaxvalue nocycle nocache;
 
 -- 작가 테이블 생성
 create table author(
-    author_id int primary key,
-    author_name varchar2(50),
-    nation_id varchar2(2),
-    author_intro long,
-    reg_date date default sysdate,
-    update_date date default sysdate,
-    foreign key (nation_id) references nation(nation_id)
+    authorId number primary key,
+    authorName varchar2(50),
+    nationId varchar2(2),
+    authorIntro long,
+    regDate date default sysdate,
+    updateDate date default sysdate,
+    foreign key (nationId) references nation(nationId)
 );
 
-insert into author(author_id, author_name, nation_id, author_intro) values(author_seq.nextval, '유홍준', '01', '작가 소개입니다' );
-insert into author(author_id, author_name, nation_id, author_intro) values(author_seq.nextval, '김난도', '01', '작가 소개입니다' );
-insert into author(author_id, author_name, nation_id, author_intro) values(author_seq.nextval, '폴크루그먼', '02', '작가 소개입니다' );
+insert into author(authorId) values(authorSeq.NEXTVAL);
+select authorSeq.currval from dual;
+drop sequence authorSeq;
 
 
+insert into author(authorId, authorName, nationId, authorIntro) values(authorSeq.nextval, '유홍준', '01', '작가 소개입니다' );
+insert into author(authorId, authorName, nationId, authorIntro) values(authorSeq.nextval, '김난도', '01', '작가 소개입니다' );
+insert into author(authorId, authorName, nationId, authorIntro) values(authorSeq.nextval, '폴크루그먼', '02', '작가 소개입니다' );
+insert into author(authorId, authorName, nationId, authorIntro) values(authorSeq.nextval, 'test', '02', 'test' );
+
+-- 인덱스명 찾기
+select * from user_indexes;
 commit;

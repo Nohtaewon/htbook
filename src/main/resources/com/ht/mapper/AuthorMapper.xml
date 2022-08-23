@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ht.mapper.AuthorMapper">
-<!-- 작가 등록 -->
-<insert id="authorEnroll">
-	insert into author(author_id, author_name, nation_id, author_intro)
-	values(author_seq.nextval, #{authorName}, #{nationId}, #{authorIntro})
-</insert>
+	<!-- 작가 등록 -->
+	<insert id="authorEnroll">
+		insert into author(authorId, authorName, nationId, authorIntro)
+		values(authorSeq.nextval, #{authorName}, #{nationId}, #{authorIntro})
+	</insert>
+      
+	<!-- 작가 목록 -->
+    <select id="authorGetList" resultType="com.ht.author.domain.AuthorVO">
+      	<![CDATA[
+          select * from (
+              select /*+INDEX_DESC(author SYS_C004356) */ 
+                  rownum as rn, authorid, authorname, nationid, regdate, updatedate
+            from author 
+            where
+    	]]>         
+            <if test="keyword != null">
+                authorname like '%'||#{keyword}||'%' and
+            </if>
+    	<![CDATA[        
+             rownum <= #{pageNum}*#{amount}
+            )
+        	where rn > (#{pageNum} - 1) * #{amount}
+      	]]>
+    </select>
+    <!-- 작가 수 -->
+    <select id="authorGetTotal" resultType="int">
+        select count(*) from author
+        <if test="keyword != null">
+           where authorname like '%' || #{keyword} || '%'
+        </if>
+    </select>
+
 </mapper>
