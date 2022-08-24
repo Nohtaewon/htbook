@@ -4,6 +4,7 @@
 <html>
 <head>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="/resources/css/member/join.css">
 <script type="text/javascript">
 $(document).ready(function(){
 	// 회원가입 버튼 (회원가입 기능 작동)
@@ -46,23 +47,25 @@ $(document).ready(function(){
 	// ajax 종료
 	
 
+	/* 인증번호 이메일 전송 */
+	$(".mail_check_button").click(function(){
+		var email = $(".mail_input").val();  // 입력한 이메일
+		
+	    $.ajax({
+	        
+	        type:"GET",
+	        url:"mailCheck?email=" + email
+	                
+	    });
+	});
 	
 });
+
+
+
 </script>
 
 <style type="text/css">
-/*중복 아이디 존재하지 않는 경우*/
-.id_input_re_Success{
-	color: green;
-	display : none;
-}	
-	/*중복 아이디 존재 하는경우*/
-.id_input_re_Erorr{
-	color: red;
-	display : none;
-}
-
-}
 
 </style>
 <meta charset="UTF-8">
@@ -111,21 +114,22 @@ $(document).ready(function(){
 				<div class="mail_wrap">
 					<div class="mail_name">이메일</div>
 					<div class="mail_input_box">
-						<input class="user_input" name="member_mail">
+						<input class="mail_input" name="member_mail">
 					</div>
-				</div>
-				<div class="mail_input_box_warn">
+				
 					<div class="mail_check_wrap">
-						<div class="mail_check_input_box">
-							<input class="mail_check_input">
+					
+						<div class="mail_check_input_box" id="mail_check_input_box_false">
+							<input class="mail_check_input" disabled="disabled">
 						</div>
-						
-						<div class="mail check_button">
+					
+						<div class="mail_check_button">
 							<span>인증번호 전송</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
+				
 
 				
 				<div class="address_wrap">
