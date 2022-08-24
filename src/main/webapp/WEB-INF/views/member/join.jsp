@@ -114,17 +114,19 @@ $(document).ready(function(){
 						<input class="user_input" name="member_mail">
 					</div>
 				</div>
-				
-				<div class="mail_check_wrap">
-					<div class="mail_check_input_box">
-						<input class="mail_check_input">
+				<div class="mail_input_box_warn">
+					<div class="mail_check_wrap">
+						<div class="mail_check_input_box">
+							<input class="mail_check_input">
+						</div>
+						
+						<div class="mail check_button">
+							<span>인증번호 전송</span>
+						</div>
+						<div class="clearfix"></div>
 					</div>
-					
-					<div class="mail check_button">
-						<span>인증번호 전송</span>
-					</div>
-					<div class="clearfix"></div>
 				</div>
+
 				
 				<div class="address_wrap">
 					<div class="address_name">주소</div>
