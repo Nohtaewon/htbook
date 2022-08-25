@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,9 @@ public class MemberController {
 	@Autowired
 	private MemberService memberservice;
 	
+//	@Autowired
+//	PasswordEncoder pwEncoder;
+//	
 	
 	
 	
@@ -38,8 +42,16 @@ public class MemberController {
 	public String joinPost(MemberVO member) throws Exception{
 		log.info("join Post 호출");
 		
-		memberservice.memberJoin(member);
 		
+//		String rawPw= ""; //인코딩 전 비밀번호
+//		String encodePw=""; // 인코딩 후 비밀번호
+//		
+//		rawPw= member.getMember_pw(); // 비밀번호 데이터
+//		encodePw = pwEncoder.encode(rawPw); // 인코딩
+//		member.setMember_pw(encodePw); // 인코딩된 비밀번호 member객체 넣기
+		
+		
+		memberservice.memberJoin(member);
 		return "redirect:/main";
 	}
 	
