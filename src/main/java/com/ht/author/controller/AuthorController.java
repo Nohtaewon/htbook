@@ -67,7 +67,7 @@ public class AuthorController {
 	}
 	
 	// 작가 상세페이지
-	@GetMapping("/authorDetail")
+	@GetMapping({"/authorDetail", "/authorModify"})
 	public void authorGetInfoGET(int authorId, Criteria cri, Model model) throws Exception {
 		// 작가 관리 페이지 정보
 		model.addAttribute("cri", cri);
