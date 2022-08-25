@@ -65,4 +65,14 @@ public class AuthorController {
 		rttr.addFlashAttribute("enroll_result", author.getAuthorName());
 		return "redirect:/author/authorManage";
 	}
+	
+	// 작가 상세페이지
+	@GetMapping("/authorDetail")
+	public void authorGetInfoGET(int authorId, Criteria cri, Model model) throws Exception {
+		// 작가 관리 페이지 정보
+		model.addAttribute("cri", cri);
+		
+		// 선택 작가 정보
+		model.addAttribute("authorInfo", authorService.authorGetDetail(authorId));
+	}
 }

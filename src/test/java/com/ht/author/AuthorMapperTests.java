@@ -46,7 +46,6 @@ public class AuthorMapperTests {
 			System.out.println("list"+i+"..........."+list.get(i));
 		}
 	}
-	 */
 	
 	@Test
 	public void authorGetTotalTest() throws Exception{
@@ -56,4 +55,21 @@ public class AuthorMapperTests {
 		int total = mapper.authorGetTotal(cri);
 		System.out.println("total...."+total);
 	}
+	 */
+	
+	@Test
+	public void authorGetDetailTest() {
+		int authorId = 30;
+		AuthorVO author = mapper.authorGetDetail(authorId);
+		System.out.println("author........" + author);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

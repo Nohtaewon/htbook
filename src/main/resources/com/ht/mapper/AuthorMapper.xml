@@ -32,5 +32,8 @@
            where authorname like '%' || #{keyword} || '%'
         </if>
     </select>
-
+    <!-- 작가 상세 페이지 -->
+	<select id="authorGetDetail" resultType="com.ht.author.domain.AuthorVO">
+		select * from author where authorId = #{authorId}
+	</select>
 </mapper>

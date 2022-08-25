@@ -1,6 +1,6 @@
 drop table nation;
 drop table author;
-drop sequence author_seq;
+drop sequence authorSeq;
 
 -- 국가 테이블 생성
 create table nation(
@@ -19,16 +19,16 @@ create table author(
     authorId number primary key,
     authorName varchar2(50),
     nationId varchar2(2),
-    authorIntro long,
+    authorIntro varchar2(2000),
     regDate date default sysdate,
     updateDate date default sysdate,
     foreign key (nationId) references nation(nationId)
 );
 
-insert into author(authorId) values(authorSeq.NEXTVAL);
-select authorSeq.currval from dual;
-drop sequence authorSeq;
 
+insert into author(authorId) values(authorSeq.NEXTVAL);
+
+select authorSeq.currval from dual;
 
 insert into author(authorId, authorName, nationId, authorIntro) values(authorSeq.nextval, '유홍준', '01', '작가 소개입니다' );
 insert into author(authorId, authorName, nationId, authorIntro) values(authorSeq.nextval, '김난도', '01', '작가 소개입니다' );

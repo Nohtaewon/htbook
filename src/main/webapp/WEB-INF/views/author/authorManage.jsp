@@ -315,7 +315,11 @@ ul {
 								<c:forEach items="${list}" var="li">
 									<tr>
 										<td><c:out value="${li.authorId}"></c:out></td>
-										<td><c:out value="${li.authorName}"></c:out></td>
+										<td>
+											<a href='<c:out value="${li.authorId}" />' class="move">
+												<c:out value="${li.authorName}"></c:out>
+											</a>
+										</td>
 										<td><c:out value="${li.nationName}"></c:out></td>
 										<td><fmt:formatDate value="${li.regDate}"
 												pattern="yyyy-MM-dd" /></td>
@@ -434,6 +438,16 @@ $("#searchForm button").on("click", function(e){
 	searchForm.find("input[name='pageNum']").val("1");
 	
 	searchForm.submit();
+	
+});
+// 작가 상세 페이지 이동
+$(".move").on("click", function(e){
+	
+	e.preventDefault();
+	
+	moveForm.append("<input type='hidden' name='authorId' value='"+ $(this).attr("href") + "'>");
+	moveForm.attr("action", "/author/authorDetail");
+	moveForm.submit();
 	
 });
 
