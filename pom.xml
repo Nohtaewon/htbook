@@ -170,7 +170,7 @@
 		<scope>provided</scope>
 	</dependency>
 	
-        <!-- security -->
+	<!-- security -->
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
     <dependency>
         <groupId>org.springframework.security</groupId>
@@ -189,7 +189,6 @@
         <artifactId>spring-security-config</artifactId>
         <version>5.4.2</version>
     </dependency>
-	
 	</dependencies>
     <build>
         <plugins>
