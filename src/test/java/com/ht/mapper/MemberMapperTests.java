@@ -35,14 +35,33 @@ public class MemberMapperTests {
 //			memeberMapper.memberJoin(member);
 //		}
 		
-		//아이디 중복검사
+//		//아이디 중복검사
+//		@Test
+//		public void memberIdChk()throws Exception{
+//			String id = "testid"; // 존재하는 아이디
+//			String id2 = "test123"; // 존재하지 않는 아이디
+//			memeberMapper.idCheck(id);
+//			memeberMapper.idCheck(id2);
+//			log.info("존재하는 아이디:(1)= " + memeberMapper.idCheck(id) );
+//			log.info("존재하지않는 아이디: (0)= " + memeberMapper.idCheck(id2) );
+//		}
+		
+		// 로그인 쿼리 테스트
 		@Test
-		public void memberIdChk()throws Exception{
-			String id = "testid"; // 존재하는 아이디
-			String id2 = "test123"; // 존재하지 않는 아이디
-			memeberMapper.idCheck(id);
-			memeberMapper.idCheck(id2);
-			log.info("존재하는 아이디:(1)= " + memeberMapper.idCheck(id) );
-			log.info("존재하지않는 아이디: (0)= " + memeberMapper.idCheck(id2) );
+		public void memberLogin() throws Exception{
+			
+			MemberVO member = new MemberVO();
+			
+			// 올바르지 않은 아이디 비번 
+//			member.setMember_id("test");
+//			member.setMember_pw("1234");
+			
+			
+			// 올바른 아이디 비번
+			member.setMember_id("test");
+			member.setMember_pw("123");
+			
+			memeberMapper.memberLogin(member);
+			log.info("결과값" +memeberMapper.memberLogin(member));
 		}
 }
