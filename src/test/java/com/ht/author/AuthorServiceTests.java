@@ -37,4 +37,19 @@ public class AuthorServiceTests {
 		int authorId=20;
 		log.info(service.authorGetDetail(authorId));
 	}
+	
+	@Test
+	public void authorModifyTest() throws Exception{
+		AuthorVO author = new AuthorVO();
+		
+		author.setAuthorId(1);
+		System.out.println("수정 전..." + service.authorGetDetail(author.getAuthorId()));
+		
+		author.setAuthorName("수정");
+		author.setNationId("01");
+		author.setAuthorIntro("소개 수정 하였습니다");
+		
+		service.authorModify(author);
+		System.out.println("수정 후..." + service.authorGetDetail(author.getAuthorId()));
+	}
 }

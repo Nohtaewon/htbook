@@ -75,4 +75,15 @@ public class AuthorController {
 		// 선택 작가 정보
 		model.addAttribute("authorInfo", authorService.authorGetDetail(authorId));
 	}
+	
+	// 작가 정보 수정
+	@PostMapping("/authorModify")
+	public String authorModifyPOST(AuthorVO author, RedirectAttributes rttr) throws Exception {
+		
+		int result = authorService.authorModify(author);
+		
+		rttr.addFlashAttribute("modify_result", result);
+		
+		return "redirect:/author/authorManage";
+	}
 }

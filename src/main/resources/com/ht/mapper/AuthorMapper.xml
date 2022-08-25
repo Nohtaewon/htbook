@@ -36,4 +36,8 @@
 	<select id="authorGetDetail" resultType="com.ht.author.domain.AuthorVO">
 		select * from author where authorId = #{authorId}
 	</select>
+	<!-- 작가 정보 수정 -->
+	<update id="authorModify">
+		update author set authorName=#{authorName}, nationId=#{nationId}, authorIntro=#{authorIntro}, updatedate=sysdate where authorId=#{authorId}
+	</update>
 </mapper>
