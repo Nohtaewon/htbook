@@ -12,7 +12,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {RootConfig.class};
+		return new Class[] {RootConfig.class, SecurityConfig.class};
 	}
 
 	@Override
@@ -45,6 +45,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		//return super.getServletFilters();
 		return new Filter[] {characterEncodingFilter};
 	}
+	
+	
 
 	
 }
