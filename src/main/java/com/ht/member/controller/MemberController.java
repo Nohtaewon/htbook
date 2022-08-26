@@ -109,12 +109,35 @@ public class MemberController {
 			log.info("로그인실패 : 아이디 존재X");
 			rttr.addFlashAttribute("result",0);
 			return "redirect:/member/login";
-			
-			
-			
-			
+		
 		}
 
 	}
+	
+	// 로그아웃
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logoutMainGET(HttpServletRequest request) throws Exception{
+		
+		log.info("logoutMainGET 호출");
+		
+		HttpSession session = request.getSession();
+		
+		session.invalidate(); // session 값 제거
+		
+		return "redirect:/main";
+	}
+	
+    // 비동기 방식 로그아웃
+    @RequestMapping(value="logout", method=RequestMethod.POST)
+    @ResponseBody
+    public void logoutPOST(HttpServletRequest request) throws Exception{
+        
+        log.info("logoutPOST 비동기 호출");
+        
+        HttpSession session = request.getSession();
+        
+        session.invalidate();
+        
+    }
 
 }
