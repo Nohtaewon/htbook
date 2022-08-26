@@ -5,40 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="../resources/css/book/goodsenroll.css">
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 </head>
 <body>
-	<div class="wrapper">
-		<div class="wrap">
-			<!-- gnv_area -->
-			<div class="top_gnb_area">
-				<ul class="list">
-					<li><a href="#">메인 페이지</a></li>
-					<li><a href="#">로그아웃</a></li>
-					<li>고객센터</li>
-				</ul>
-			</div>
-			<!-- top_subject_area -->
-			<div class="admin_top_wrap">
-				<span>관리자 페이지</span>
-
-			</div>
-			<!-- contents-area -->
-			<div class="admin_wrap">
-				<!-- 네비영역 -->
-				<div class="admin_navi_wrap">
-					<ul>
-						<li><a class="admin_list_01" href="/book/goodsEnroll">상품 등록</a></li>
-						<li><a class="admin_list_02" href="/book/goodsManage">상품 관리</a></li>
-						<lI><a class="admin_list_03" href="/author/authorEnroll">작가
-								등록</a></lI>
-						<lI><a class="admin_list_04" href="/author/authorManage">작가
-								관리</a></lI>
-						<lI><a class="admin_list_05">회원 관리</a></lI>
-					</ul>
-				</div>
+	<%@include file="../common/header.jsp" %>
 				<div class="admin_content_wrap">
 					<div class="admin_content_subject">
 						<span>상품 등록</span>
@@ -66,7 +41,7 @@
 									<label>출판일</label>
 								</div>
 								<div class="form_section_content">
-									<input name="publeYear">
+									<input name="publeYear" autocomplete="off" readonly="readonly">
 								</div>
 							</div>
 							<div class="form_section">
@@ -114,7 +89,7 @@
 									<label>책 소개</label>
 								</div>
 								<div class="form_section_content">
-									<input name="bookIntro">
+									<textarea name="bookIntro" id="bookIntro_textarea"></textarea>
 								</div>
 							</div>
 							<div class="form_section">
@@ -122,7 +97,7 @@
 									<label>책 목차</label>
 								</div>
 								<div class="form_section_content">
-									<input name="bookContents">
+									<textarea name="bookContents" id="bookContents_textarea"></textarea>
 								</div>
 							</div>
 						</form>
@@ -133,11 +108,7 @@
 					</div>
 
 				</div>
-			</div>
-		</div>
-		<!-- class="wrap" -->
-	</div>
-	<!-- class="wrapper" -->
+<%@include file="../common/footer.jsp" %>
 </body>
 <script>
 let enrollForm = $("#enrollForm")
@@ -150,7 +121,48 @@ $("#cancelBtn").click(function(){
 // 상품 등록 버튼
 $("#enrollBtn").on("click", function(e){
 	e.preventDefault();
+	
 	enrollForm.submit();
+		
 });
+
+//위지윅 적용
+	// 책 소개
+	ClassicEditor
+		.create(document.querySelector('#bookIntro_textarea'))
+		.catch(error=>{
+			console.error(error);
+		});
+	// 책 목차
+	ClassicEditor
+		.create(document.querySelector('#bookContents_textarea'))
+		.catch(error=>{
+			console.error(error);
+		});
+
+// 캘린더 위젯 적용
+	// 설정
+	const config = {
+		dateFormat: 'yy-mm-dd',
+		showOn : "button",
+		buttonText:"날짜 선택",
+	    prevText: '이전 달',
+	    nextText: '다음 달',
+	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    dayNames: ['일','월','화','수','목','금','토'],
+	    dayNamesShort: ['일','월','화','수','목','금','토'],
+	    dayNamesMin: ['일','월','화','수','목','금','토'],
+	    yearSuffix: '년',
+        changeMonth: true,
+        changeYear: true
+	}
+
+	// 캘린더
+	$(function(){
+		$("input[name='publeYear']").datepicker(config);
+	});
+
+
 </script>
 </html>
