@@ -6,7 +6,7 @@
 
 /* 화면 전체 렙 */
 .wrapper{
-	width: 1900px;	
+	width: 100%;
 }
 
 /* content 랩 */
@@ -52,9 +52,10 @@
 	padding: 10px 14px;	
 	display: block;
 	width : 80%;
-	margin : auto;	
+	margin : auto;
 }
-.pw_iput{
+
+.pw_input{
 	width:100%;
 	height:100%;
 	border:none;
@@ -79,4 +80,12 @@
 /* float 속성 해제 */
 .clearfix{
 	clear: both;
+}
+
+/* 로그인 실패시 경고글 */
+.login_warn{
+	margin-top: 30px;
+	text-align: center; 
+	color : red;
+	
 }
