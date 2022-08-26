@@ -86,4 +86,26 @@ public class AuthorController {
 		
 		return "redirect:/author/authorManage";
 	}
+	
+	// 작가 검색 팝업창
+	@GetMapping("/authorPop")
+	public void authorPopGET(Criteria cri, Model model) throws Exception{
+		log.info("authorPopGET...........");
+		
+		cri.setAmount(5);
+		// 게시물 목록 출력 데이터
+		List<AuthorVO> list = authorService.authorGetList(cri);
+		
+		// 작가 존재 유무
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);	// 작가가 존재할 경우			
+		}else {
+			model.addAttribute("listCheck", "empty");	// 작가가 존재하지 않을 경우
+		}
+		
+		// 페이지 이동 인터페이스 데이터
+		model.addAttribute("pageMaker", new PageDTO(cri, authorService.authorGetTotal(cri)));
+		
+	}
+	
 }
