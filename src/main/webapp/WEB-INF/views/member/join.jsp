@@ -82,11 +82,11 @@ $(document).ready(function(){
 		if(addr == ""){
 			$('.final_addr_ck').css('display','block');
 			addressCheck = false;
-			console.log("주소null")
+
 		}else{
 			$('.final_addr_ck').css('display','none');
 			addressCheck = true;
-			console.log("주소")
+
 		}
 		
 		
@@ -180,7 +180,7 @@ $(document).ready(function(){
 	$('.mail_input').on("propertychange change keyup paste input", function(){
 		var mailWarnMsg = $(".mail_input_box_warn"); 
 		var email = $('.mail_input').val();
-		console.log("test")
+
 	    
 		/* 이메일 형식 유효성 검사 */
 	    if(mailFormCheck(email)){
