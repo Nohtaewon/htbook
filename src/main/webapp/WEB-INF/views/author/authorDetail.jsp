@@ -8,14 +8,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="../resources/css/author/authorDetail.css">
+<link rel="stylesheet" href="../resources/css/author/authorDetail.css">
 </head>
 <body>
+<%@include file="../common/header.jsp" %>
 <div class="admin_content_wrap">
 	<div class="admin_content_subject"><span>작가 상세</span></div>
 	<div class="admin_content_main">
@@ -85,6 +81,7 @@
 			<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>' >
 			<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>'>
 		</form>
+		<%@include file="../common/footer.jsp" %>
 </body>
 <script>
 	let moveForm = $("#moveForm");
