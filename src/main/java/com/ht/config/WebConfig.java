@@ -45,6 +45,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		//return super.getServletFilters();
 		return new Filter[] {characterEncodingFilter};
 	}
+	
+	
 
 	
 }
