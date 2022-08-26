@@ -36,8 +36,8 @@
 				<!-- 네비영역 -->
 				<div class="admin_navi_wrap">
 					<ul>
-						<li><a class="admin_list_01" href="#">상품 등록</a></li>
-						<li><a class="admin_list_02" href="#">상품 관리</a></li>
+						<li><a class="admin_list_01" href="/book/goodsEnroll">상품 등록</a></li>
+						<li><a class="admin_list_02" href="/book/goodsManage">상품 관리</a></li>
 						<lI><a class="admin_list_03" href="/author/authorEnroll">작가
 								등록</a></lI>
 						<lI><a class="admin_list_04" href="/author/authorManage">작가
