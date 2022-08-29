@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ht.book.domain.BookVO;
 import com.ht.book.service.BookService;
+import com.ht.common.Criteria;
+import com.ht.common.PageDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -53,8 +55,19 @@ public class BookController {
 	
 	// 상품 관리
 	@GetMapping("/goodsManage")
-	public void goodsManageGet() {
+	public void goodsManageGet(Criteria cri, Model model) throws Exception {
+		// 상품 리스트
+		List list = bookService.goodsGetList(cri);
 		
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+		}else {
+			model.addAttribute("listCheck", "empty");
+			return;
+		}
+		
+		// 페이지 인터페이스 데이터
+		model.addAttribute("pageMaker", new PageDTO(cri, bookService.goodsGetTotal(cri)));
 	}
 	
 }

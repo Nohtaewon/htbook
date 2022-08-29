@@ -117,7 +117,7 @@
 								<div class="form_section_title">
 									<label>책 소개</label>
 								</div>
-								<div class="form_section_content">
+								<div class="form_section_content bit">
 									<textarea name="bookIntro" id="bookIntro_textarea"></textarea>
 									<span class="ck_warn bookIntro_warn">책 소개를 입력해주세요.</span>
 								</div>
@@ -126,7 +126,7 @@
 								<div class="form_section_title">
 									<label>책 목차</label>
 								</div>
-								<div class="form_section_content">
+								<div class="form_section_content bct">
 									<textarea name="bookContents" id="bookContents_textarea"></textarea>
 									<span class="ck_warn bookContents_warn">책 목차를 입력해주세요.</span>
 								</div>
@@ -243,7 +243,7 @@ $("#enrollBtn").on("click", function(e){
 		discountCk = false;
 	}	
 	
-	if(bookIntro == '<br data-cke-filler="true">'){
+	if(bookIntro != '<br data-cke-filler="true">'){
 		$(".bookIntro_warn").css('display','none');
 		introCk = true;
 	} else {
@@ -251,11 +251,13 @@ $("#enrollBtn").on("click", function(e){
 		introCk = false;
 	}	
 	
-	if(bookContents == '<br data-cke-filler="true">'){
+	if(bookContents != '<br data-cke-filler="true">'){
 		$(".bookContents_warn").css('display','none');
+		alert("true");
 		contentsCk = true;
 	} else {
 		$(".bookContents_warn").css('display','block');
+		alert("false");
 		contentsCk = false;
 	}
 	
@@ -268,6 +270,7 @@ $("#enrollBtn").on("click", function(e){
 	}
 		
 });
+
 
 //위지윅 적용
 	// 책 소개
