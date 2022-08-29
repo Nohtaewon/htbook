@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.ht.interceptor.AdminInterceptor;
+import com.ht.interceptor.CartInterceptor;
 import com.ht.interceptor.LoginInterceptor;
 
 @EnableWebMvc //설정이 완료된 여러 스프링 빈을 추가해준다.
@@ -53,6 +54,7 @@ public class ServletConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/member/login");
         registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**");
+        registry.addInterceptor(new CartInterceptor()).addPathPatterns("/cart/**");
     }
 
 }
