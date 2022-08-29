@@ -6,5 +6,7 @@
 	insert into book(bookId, bookName, authorId, publeYear, publisher, cateCode, bookPrice, bookStock, bookDiscount, bookIntro, bookContents)
 	values(bookSeq.nextval, #{bookName},#{authorId}, #{publeYear},#{publisher},#{cateCode},#{bookPrice},#{bookStock},#{bookDiscount},#{bookIntro},#{bookContents})
 </insert>
-
+<select id="cateList" resultType="com.ht.book.domain.CateVO">
+	select * from bcate order by catecode
+</select>
 </mapper>

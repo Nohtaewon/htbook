@@ -1,9 +1,12 @@
 package com.ht.book.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ht.book.domain.BookVO;
+import com.ht.book.domain.CateVO;
 import com.ht.mapper.BookMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -22,6 +25,12 @@ public class BookServiceImpl implements BookService{
 		
 		bookMapper.bookEnroll(book);
 		
+	}
+
+	@Override
+	public List<CateVO> cateList() {
+		log.info("cateList.........");
+		return bookMapper.cateList();
 	}
 
 }

@@ -1,12 +1,16 @@
 package com.ht.book.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ht.book.domain.BookVO;
 import com.ht.book.service.BookService;
 
@@ -22,8 +26,20 @@ public class BookController {
 	
 	// 상품 등록 페이지 접속
 	@GetMapping("/goodsEnroll")
-	public void goodsEnrollGet() throws Exception{
+	public void goodsEnrollGet(Model model) throws Exception{
 		log.info("상품 등록 페이지 접속");
+		
+		ObjectMapper objm = new ObjectMapper();
+		
+		List list = bookService.cateList();
+		
+		// 자바 객체를 JSON형식의 데이터로 변환
+		String cateList = objm.writeValueAsString(list);
+		
+		model.addAttribute("cateList", cateList);
+		
+		log.info("변경 전 ......" + list);
+		log.info("변경 후 ......" + cateList);
 	}
 	// 상품 등록
 	@PostMapping("/goodsEnroll")
@@ -40,4 +56,5 @@ public class BookController {
 	public void goodsManageGet() {
 		
 	}
+	
 }
