@@ -16,6 +16,9 @@ create table book(
 	updateDate date default sysdate
 );
 
+alter table book add foreign key (authorId) references author(authorId);
+alter table book add foreign key (cateCode) references bcate(cateCode);
+
 create table bcate(
 	tier number(1) not null,
 	cateName varchar2(30) not null,
