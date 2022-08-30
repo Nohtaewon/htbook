@@ -108,4 +108,30 @@ public class AuthorController {
 		
 	}
 	
+	// 작가 정보 삭제
+	// 우리가 삭제하고자 하는 데이터는 작가 테이블(author)의 데이터입니다. 
+	// 문제는 외래 키 조건으로 인해 작가 테이블을 참조(reference) 하고 있는  상품 테이블(book)이 있다는 점입니다. 
+	// 참조되지 않고 있는 행을 지운다면 문제가 없지만 만약 참조되고 있는 행을 지우려고 시도를 한다면 '무결성 제약 조건을 위반' 
+	// 한다는 경고와 함께 SQLIntegrityConstraintViolationException 예외가 발생합니다
+	// 따라서 try catch 문을 사용하여 참조되지 않는 행을 지울땐 삭제를 수행하고 '작가 목록' 페이지로 1을 전성하도록 하고, 
+	// 예외가 발생한 상황에는 '작가 목록' 페이지로 2를 전송하도록 작성하였습니다. 
+	
+	@PostMapping("/authorDelete")
+	public String authorDeletePOST(int authorId, RedirectAttributes rttr) {
+		
+		int result = 0;		
+		try {		
+			result = authorService.authorDelete(authorId);			
+		} catch (Exception e) {			
+			e.printStackTrace();
+			result = 2;
+			rttr.addFlashAttribute("delete_result", result);		
+			return "redirect:/author/authorManage";			
+		}
+			
+		rttr.addFlashAttribute("delete_result", result);	
+		return "redirect:/author/authorManage";
+		
+	}
+	
 }

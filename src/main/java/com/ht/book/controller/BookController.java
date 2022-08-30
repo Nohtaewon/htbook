@@ -95,4 +95,12 @@ public class BookController {
 		return "redirect:/book/goodsManage";
 	}
 	
+	// 상품 정보 삭제
+	@PostMapping("/goodsDelete")
+	public String goodsDeletePOST(int bookId, RedirectAttributes rttr) {
+		int result = bookService.goodsDelete(bookId);
+		rttr.addFlashAttribute("delete_result", result);
+		return "redirect:/book/goodsManage";
+	}
+	
 }

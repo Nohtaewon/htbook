@@ -56,4 +56,9 @@ public class BookServiceImpl implements BookService{
 		return bookMapper.goodsModify(vo);
 	}
 
+	@Override
+	public int goodsDelete(int bookId) {
+		return bookMapper.goodsDelete(bookId);
+	}
+
 }

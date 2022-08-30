@@ -75,7 +75,6 @@ public class BookMapperTests {
 		BookVO result = mapper.goodsGetDetail(bookId);
 		System.out.println("상품 조회 데이터:"+result);
 	}
-	 */
 	// 상품 정보 수정 
 	@Test
 	public void goodsModifyTest() {
@@ -94,5 +93,16 @@ public class BookMapperTests {
 		book.setBookContents("책 목차 ");		
 		mapper.goodsModify(book);
 		
+	}
+	 */
+	
+	// 상품 정보 삭제
+	@Test
+	public void goodsDeleteTest() {
+		int bookId = 169;
+		int result = mapper.goodsDelete(bookId);
+		if(result == 1) {
+			System.out.println("삭제 성공");
+		}
 	}
 }

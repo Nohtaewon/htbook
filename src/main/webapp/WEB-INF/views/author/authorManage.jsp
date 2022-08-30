@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../resources/css/author/authorManage.css">
 </head>
 <body>
+<%@include file="../common/header.jsp" %>
 	<div class="admin_content_wrap">
 		<div class="admin_content_subject">
 			<span>작가 관리</span>
@@ -96,7 +97,7 @@
 			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
 		</form>
 	</div>
-
+	<%@include file="../common/footer.jsp" %>
 </body>
 <script>
 	$(document).ready(function() {
@@ -124,6 +125,18 @@
 			}
 		}
 	});
+	
+	
+	// 삭제 결과 경고창 
+	let delete_result = '${delete_result}';
+	
+	if(delete_result == 1){
+		alert("삭제 완료");
+	} else if(delete_result == 2){
+		alert("해당 작가 데이터를 사용하고 있는 데이터가 있어서 삭제 할 수 없습니다.")
+	}
+	
+	
 	let moveForm = $('#moveForm');
 
 	// 페이지 이동 버튼 
