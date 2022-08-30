@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ht.book.domain.BookVO;
 import com.ht.book.service.BookService;
@@ -68,6 +69,22 @@ public class BookController {
 		
 		// 페이지 인터페이스 데이터
 		model.addAttribute("pageMaker", new PageDTO(cri, bookService.goodsGetTotal(cri)));
+	}
+	
+	// 상품 조회 페이지
+	@GetMapping("/goodsDetail")
+	public void goodsGetInfoGET(int bookId, Criteria cri, Model model) throws JsonProcessingException{
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		// 카테고리 리스트 데이터
+		model.addAttribute("cateList", mapper.writeValueAsString(bookService.cateList()));
+		
+		// 목록 페이지 조건 정보
+		model.addAttribute("cri", cri);
+		
+		// 조회 페이지 정보
+		model.addAttribute("goodsInfo", bookService.goodsGetDetail(bookId));
 	}
 	
 }

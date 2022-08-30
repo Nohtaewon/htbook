@@ -253,11 +253,9 @@ $("#enrollBtn").on("click", function(e){
 	
 	if(bookContents != '<br data-cke-filler="true">'){
 		$(".bookContents_warn").css('display','none');
-		alert("true");
 		contentsCk = true;
 	} else {
 		$(".bookContents_warn").css('display','block');
-		alert("false");
 		contentsCk = false;
 	}
 	

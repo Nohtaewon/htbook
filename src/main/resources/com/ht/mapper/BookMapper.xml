@@ -20,30 +20,27 @@
 		    from book 
 		    where 
 		]]>    
-		
-		    <if test="keyword != null">
-		    
-			    bookName like '%' || #{keyword} || '%' and
-			    
-		    </if>
-		     
+		    <if test="keyword != null">   
+			    bookName like '%' || #{keyword} || '%' and    
+		    </if>  
 		<![CDATA[    
 		    rownum <= #{pageNum} * #{amount} 
 		    )
 		where rn > (#{pageNum} -1) * #{amount}		  	
   		]]>
-  	
   	</select>
   	
   	<!-- 상품 총 개수 -->
   	<select id="goodsGetTotal" resultType="int">
-  	
   		select count(*) from book
-  		
   		<if test="keyword != null">
-  		
   			where bookName like '%' || #{keyword} || '%'
   		</if>
-  		
   	</select>
+  	<!-- 상품 조회 페이지 -->
+	<select id="goodsGetDetail" resultType="com.ht.book.domain.BookVO">
+		select bookId, bookName, (select authorName from author where authorId =book.authorId) authorName, 
+			authorId, publeYear, publisher, cateCode, bookPrice, bookStock, bookDiscount, bookIntro, bookContents, regDate, updateDate 
+		from book where bookId = #{bookId}
+	</select>
 </mapper>
