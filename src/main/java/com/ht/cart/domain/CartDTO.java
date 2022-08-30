@@ -2,8 +2,10 @@ package com.ht.cart.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 // 장바구니 데이터를 전달, 받을 수 있도록 도와줄 DTO
+@ToString
 public class CartDTO {
 	@Getter @Setter
 	private int cart_id;
@@ -13,7 +15,8 @@ public class CartDTO {
 	private int bookId;
 	@Getter @Setter
 	private int book_count;
-	
+
+
 	//book , join 하기 위해
 	@Getter @Setter
 	private String bookName;
@@ -30,9 +33,22 @@ public class CartDTO {
 	@Getter
 	private int total_price;
 	
+	// pont
+	@Getter
+	private int point; // 상품 한개의 받을 수 있는 포인트
+	@Getter
+	private int total_point; // 수량을 곱한 총 포인트
+	
+	//상품 이미지
+	
+	
 	public void initSaleTotal() {
 		this.sale_price = (int)(this.bookPrice * (1- this.bookDiscount));
 		this.total_price = this.sale_price * this.book_count;
+		this.point = (int)(Math.floor(this.sale_price*0.05));
+		this.total_point = this.point * this.book_count;
 	}
+	
+
 	
 }
