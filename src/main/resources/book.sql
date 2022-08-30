@@ -17,7 +17,7 @@ create table book(
 );
 
 insert into book(bookId, bookName, authorId, publeYear, publisher, cateCode, bookPrice, bookStock, bookDiscount, bookIntro, bookContents) 
-values(bookSeq.nextval, '테스트', '3', '22-08-24', '테스트', 202002, 10000, 10, 0.1, '<p>유효성테스트</p>',  '<p>유효성테스트</p>');
+values(bookSeq.nextval, '테스트', '3', '22-08-24', '테스트', 202002, 10000, 10, 0.1, '<p>테스트</p>',  '<p>테스트</p>');
 
 alter table book add foreign key (authorId) references author(authorId);
 alter table book add foreign key (cateCode) references bcate(cateCode);

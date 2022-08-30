@@ -72,7 +72,7 @@ public class BookController {
 	}
 	
 	// 상품 조회 페이지
-	@GetMapping("/goodsDetail")
+	@GetMapping({"/goodsDetail", "/goodsModify"})
 	public void goodsGetInfoGET(int bookId, Criteria cri, Model model) throws JsonProcessingException{
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -85,6 +85,14 @@ public class BookController {
 		
 		// 조회 페이지 정보
 		model.addAttribute("goodsInfo", bookService.goodsGetDetail(bookId));
+	}
+	
+	// 상품 정보 수정
+	@PostMapping("/goodsModify")
+	public String goodsModifyPOST(BookVO vo, RedirectAttributes rttr) {
+		int result = bookService.goodsModify(vo);
+		rttr.addFlashAttribute("modify_result", result);
+		return "redirect:/book/goodsManage";
 	}
 	
 }

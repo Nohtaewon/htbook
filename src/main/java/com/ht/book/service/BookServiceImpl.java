@@ -51,4 +51,9 @@ public class BookServiceImpl implements BookService{
 		return bookMapper.goodsGetDetail(bookId);
 	}
 
+	@Override
+	public int goodsModify(BookVO vo) {
+		return bookMapper.goodsModify(vo);
+	}
+
 }
