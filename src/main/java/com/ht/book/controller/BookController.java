@@ -1,6 +1,10 @@
 package com.ht.book.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -101,6 +107,54 @@ public class BookController {
 		int result = bookService.goodsDelete(bookId);
 		rttr.addFlashAttribute("delete_result", result);
 		return "redirect:/book/goodsManage";
+	}
+	
+	
+	// 첨부파일업로드
+	@PostMapping("/uploadAjaxAction")
+	@ResponseBody
+	public void uploadAjaxActionPOST(MultipartFile[] uploadFile) {
+		
+		log.info("uploadAjaxActionPOST");
+		String uploadFolder = "c:\\storage";
+		
+		// SimpleDateForamt은 Date 클래스를 통해 얻은 오늘의 날짜를 지정된 형식의 문자열 데이터로 생성하기 위해서 사용을 합니다. 
+		// SimpleDateFormat에 대해서 간략히 설명을 하면 날짜 데이터를 지정된 문자열 형식으로 변환하거나 날짜 문자열 데이터를 날짜 데이터로 변환할 수 있게 해주는 클래스입니다.
+		// 날짜 폴더 경로
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// 오늘의 날짜 데이터
+		Date date = new Date();
+		// 오늘의 날짜 데이터 값을 가지고 있는 date 변수를 "yyyy-MM-dd" 형식의 문자열로 변환을 해주기 위해서 SimpleDateFormat의 format 메서드를 호출
+		String str = sdf.format(date);
+		String datePath = str.replace("-", File.separator);
+		
+		// 폴더 생성
+		File uploadPath = new File(uploadFolder, datePath);
+		
+		if(uploadPath.exists() == false) {
+			uploadPath.mkdirs();
+		}
+		
+		for(MultipartFile multipartFile : uploadFile) {
+			// 파일 이름 
+			String uploadFileName = multipartFile.getOriginalFilename();			
+			
+			// uuid 적용 파일 이름 
+			String uuid = UUID.randomUUID().toString();
+			
+			uploadFileName = uuid + "_" + uploadFileName;
+			
+			// 파일 위치, 파일 이름을 합친 File 객체 
+			File saveFile = new File(uploadPath, uploadFileName);
+			
+			// 파일 저장 
+			try {
+				multipartFile.transferTo(saveFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
+
 	}
 	
 }

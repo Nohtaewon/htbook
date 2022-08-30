@@ -131,6 +131,14 @@
 									<span class="ck_warn bookContents_warn">책 목차를 입력해주세요.</span>
 								</div>
 							</div>
+							<div class="form_section">
+                    			<div class="form_section_title">
+                    				<label>상품 이미지</label>
+                    			</div>
+                    			<div class="form_section_content">
+									<input type="file" id ="fileItem" name='uploadFile' style="height: 30px;" multiple>
+                    			</div>
+                    		</div>
 						</form>
 						<div class="btn_section">
 							<button id="cancelBtn" class="btn">취 소</button>
@@ -140,7 +148,7 @@
 
 				</div>
 <%@include file="../common/footer.jsp" %>
-</body>
+
 <script>
 let enrollForm = $("#enrollForm")
 
@@ -402,7 +410,7 @@ $(document).ready(function(){
 		let discountInput = $("input[name='bookDiscount']");
 		
 		let discountRate = userInput.val();	// 사용자가 입력할 할인값
-		let sendDiscountRate = discountRate / 100;	// 서버에 전송할 할인값
+		let sendDiscountRate = discountRate / 100;	// 서버에 전송할 할인
 		
 		let goodsPrice = $("input[name='bookPrice']").val();			// 원가
 		let discountPrice = goodsPrice * (1 - sendDiscountRate);		// 할인가격
@@ -414,7 +422,7 @@ $(document).ready(function(){
 		
 	});
 	
-$("input[name='bookPrice']").on("change", function(){
+	$("input[name='bookPrice']").on("change", function(){
 		
 		let userInput = $("#discount_interface");
 		let discountInput = $("input[name='bookDiscount']");
@@ -432,8 +440,64 @@ $("input[name='bookPrice']").on("change", function(){
 		
 	});
 	
+	// 이미지 업로드 
+	$("input[type='file']").on("change", function(e){
+		
+		let formData = new FormData();
+		let fileInput = $('input[name="uploadFile"]');
+		let fileList = fileInput[0].files;
+		let fileObj = fileList[0];
+		
+		// 이렇게 작성을 하면 fileCheck() 메서드가 false를 반환했을 때 
+		// false값이 not 논리 연산자로 인하여 true로 값이 변경되어 
+		// if문의 구현부가 실행되게 됩니다.
+		if(!fileCheck(fileObj.name, fileObj.size)){
+			return false;
+		}
+
+		formData.append("uploadFile", fileObj);
+
+		
+		// ajax코드에서 한 가지 주의할 점은 processData, 와 contenttype 속성의 값을 'false'로 해주어야만 첨부파일이 서버로 전송된다는 점입니다.
+		$.ajax({
+			url: '/book/uploadAjaxAction', //서버로 요청을 보낼 url
+	    	processData : false,	//서버로 전송할 데이터를 queryStirng 형태로 변환할지 여부
+	    	contentType : false,	//서버로 전송되는 데이터의 content-type
+	    	data : formData,	//서버로 전송할 데이터
+	    	type : 'POST',	//서버 요청 타입(GET, POST)
+	    	dataType : 'json',	// 서버로부터 반환받을 데이터 타입
+	    	
+		});
+		
+		
+		console.log("fileList : " + fileList);
+		console.log("fileObj : " + fileObj);
+		console.log("fileName : " + fileObj.name);
+		console.log("fileSize : " + fileObj.size);
+		console.log("fileType(MimeType) : " + fileObj.type);
+		
+	});
+		/* var, method related with attachFile */
+		let regex = new RegExp("(.*?)\.(jpg|png)$");
+		let maxSize = 1048576; //1MB	
+		
+		function fileCheck(fileName, fileSize){
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}			  
+			if(!regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}		
+			return true;		
+			
+		}
+	
+	
 	
 	
 
 </script>
+</body>
 </html>
