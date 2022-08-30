@@ -6,7 +6,7 @@ import com.ht.cart.domain.CartDTO;
 
 public interface CartMapper {
 	// 카트 추가
-	public int addCart(CartDTO cart);
+	public int addCart(CartDTO cart) throws Exception;
 	
 	// 카트 삭제
 	public int deleteCart(int cart_id);

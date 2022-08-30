@@ -1,4 +1,4 @@
-package com.ht.mapper;
+package com.ht.cart;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ht.cart.domain.CartDTO;
 import com.ht.config.RootConfig;
+import com.ht.mapper.CartMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= {RootConfig.class})

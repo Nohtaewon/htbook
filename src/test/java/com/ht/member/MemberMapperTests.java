@@ -1,4 +1,4 @@
-package com.ht.mapper;
+package com.ht.member;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ht.config.RootConfig;
+import com.ht.mapper.MemberMapper;
 import com.ht.member.domain.MemberVO;
 
 import lombok.extern.log4j.Log4j;
