@@ -63,7 +63,7 @@ $(document).ready(function(){
                     </li>
                     
                     <li>
-                        장바구니
+                        <a href="/cart/${member.member_id }">장바구니</a>
                     </li>
                 </c:if>             
                 <li>
