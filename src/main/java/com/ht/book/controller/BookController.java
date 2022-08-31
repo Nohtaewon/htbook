@@ -1,10 +1,14 @@
 package com.ht.book.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,7 @@ import com.ht.common.Criteria;
 import com.ht.common.PageDTO;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping("/book")
@@ -150,6 +155,52 @@ public class BookController {
 			// 파일 저장 
 			try {
 				multipartFile.transferTo(saveFile);
+				
+				/*	방법 1
+				// 썸네일 이미지 파일의 File객체가 필요 썸네일 생성
+				File thumbnailFile = new File(uploadPath, "s_" + uploadFileName);
+				// 원본 이미지 파일을 read() 메서드를 호출하여 BufferedImage 타입으로 변경
+				// 참조 변수를 선언하여 해당 변수에 대입
+				BufferedImage bo_image = ImageIO.read(saveFile);			
+				// 비율 
+				double ratio = 3;
+				// 넓이 높이
+				int width = (int) (bo_image.getWidth() / ratio);
+				int height = (int) (bo_image.getHeight() / ratio);
+				// 생성자를 사용하여 썸네일 이미지인 BufferedImage 객체를 생성, 참조 변수에 대입(크기를 지정하여 흰색 도화지 만듬)
+				BufferedImage bt_image = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+				// BufferedImage 객체에서 createGraphics() 메서드 호출을 총해 Graphics2D 객체 생성 참조 변수 대입
+				// 도화지에 그림을 그릴 수 있도록 하는 과정
+				Graphics2D graphic = bt_image.createGraphics();
+				// drawImage 메서드를 이용하여 원본이미지를 썸네일에 지정한 크기로 변경(도화지에 이미지를 그리는 과정)
+				graphic.drawImage(bo_image, 0, 0,width,height, null);
+				// 파일로 저장
+				ImageIO.write(bt_image, "jpg", thumbnailFile);
+				 */
+				
+				// 방법2(라이브러리 사용)
+				File thumbnailFile = new File(uploadPath, "s_" + uploadFileName);
+				
+				BufferedImage bo_image = ImageIO.read(saveFile);
+
+				//비율 
+				double ratio = 3;
+				//넓이 높이
+				int width = (int) (bo_image.getWidth() / ratio);
+				int height = (int) (bo_image.getHeight() / ratio);
+				
+				Thumbnails.of(saveFile)
+		        .size(160, 160)
+		        .toFile(thumbnailFile);
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
