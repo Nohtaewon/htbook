@@ -11,6 +11,21 @@
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	$(document).ready(function(){
+		
+		// 로그아웃 버튼 작동
+		$("#gnb_logout_button").click(function(){
+			//alert("버튼 작동");
+			
+			$.ajax({
+				type:"POST",
+				url:"/member/logout",
+				success:function(data){
+					alert("로그아웃 성공");
+					document.location.reload();
+				}
+			});
+		});	
+		
 		setTotalInfo();
 		
 		// 체크여부에 따른 정보 변화
@@ -23,14 +38,6 @@
 		// 체크박스 전체 선택
 		$(".all_check_input").on("click", function(){
 			
-			
-			
-			/*
-				prop() : 인자가 하나일 경우 호출한 객체가 인자로 부여한 속성의 값
-				프로퍼티로 가져오게 된다.
-				
-			*/
-			
 			// 체크박스 체크or 해제	
 			if($(".all_check_input").prop("checked")){
 				$(".individual_cart_checkbox").prop("checked", true);
@@ -40,6 +47,45 @@
 			
 			// 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수 , 종류)
 			setTotalInfo($(".cart_info_td"));
+		});
+		
+		//수량 수정 버튼
+		$(".quantity_modify_btn").on("click", function(){
+			let cartId = $(this).data("cart_id");
+			let bookCount = $(this).parent("td").find("input").val();
+			$(".update_cart_id").val(cartId);
+			$(".update_book_count").val(bookCount);
+			$(".quantity_update_form").submit();
+			
+			
+		});
+		
+		// 수량 추가/감소 버튼
+		$(".plus_btn").on("click", function(){
+			let quantity = $(this).parent("div").find("input").val()
+			$(this).parent("div").find("input").val(++quantity);
+		});
+		
+		$(".minus_btn").on("click", function(){
+			let quantity = $(this).parent("div").find("input").val()
+			$(this).parent("div").find("input").val(--quantity);
+		});
+		
+		// 장바구니 삭제 버특
+		$(".delete_btn").on("click", function(e){
+			e.preventDefault();
+		    if (!confirm("해당 물품을 삭제하시겠습니까?")) {
+		        return;
+		        
+		    } else {
+				let cartId = $(this).data("cart_id");
+		        console.log(cartId)
+		        $(".delete_cart_id").val(cartId);
+		        $(".quantity_delete_form").submit();
+		    }
+
+
+		    
 		});
 		
 	});
@@ -207,6 +253,20 @@
 						</tr>
 					</tbody>
 				</table>
+				<!-- 수량 조정 -->
+				<form action="/cart/update" method="post" class="quantity_update_form">
+					<input type="hidden" name="cart_id" class="update_cart_id">
+					<input type="hidden" name="book_count" class="update_book_count">
+					<input type="hidden" name="member_id" value="${member.member_id}">
+				
+				</form>
+				
+				<!-- 삭제 -->
+				<form action="/cart/delete" method="post" class="quantity_delete_form">
+					<input type="hidden" name="cart_id" class="delete_cart_id"> 
+					<input type="hidden" name="member_id" value="${member.member_id }">
+				
+				</form>
 				<table class="cart_table">
 					<caption>표 내용 부분</caption>
 					<tbody>
@@ -229,18 +289,23 @@
 									판매가 : <span class="red_color"><fmt:formatNumber value="${ci.sale_price}" pattern="#,### 원" /></span><br>
 									마일리지 : <span class="green_color"><fmt:formatNumber value="${ci.point}" pattern="#,###" /></span>
 								</td>
+								
+
 								<td class="td_width_4 table_text_align_center">
 									<div class="table_text_align_center quantity_div">
 										<input type="text" value="${ci.book_count}" class="quantity_input">	
 										<button class="quantity_btn plus_btn">+</button>
 										<button class="quantity_btn minus_btn">-</button>
 									</div>
-									<a class="quantity_modify_btn">변경</a>
+									<!-- data-칼럼명과 일치 -->
+									<a class="quantity_modify_btn" data-cart_id="${ci.cart_id}">변경</a>
 								</td>
 								<td class="td_width_4 table_text_align_center">
 									<fmt:formatNumber value="${ci.sale_price * ci.book_count}" pattern="#,### 원" />
 								</td>
-								<td class="td_width_4 table_text_align_center delete_btn"><button>삭제</button></td>
+								<td class="td_width_4 table_text_align_center">
+									<button class="delete_btn" data-cart_id="${ci.cart_id}">삭제</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

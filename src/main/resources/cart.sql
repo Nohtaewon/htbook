@@ -12,3 +12,7 @@ create table cart(
 
 -- 유니크 제약조건 걸기
 alter table cart add unique (member_id, bookId);
+
+--가데이터 넣기
+insert into CART values(cartSeq.nextval,'test',1,3)
+insert into CART values(cartSeq.nextval,'test',2,3)
