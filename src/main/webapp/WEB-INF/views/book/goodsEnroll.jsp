@@ -451,6 +451,7 @@ $(document).ready(function(){
 		// 이렇게 작성을 하면 fileCheck() 메서드가 false를 반환했을 때 
 		// false값이 not 논리 연산자로 인하여 true로 값이 변경되어 
 		// if문의 구현부가 실행되게 됩니다.
+		
 		if(!fileCheck(fileObj.name, fileObj.size)){
 			return false;
 		}
@@ -466,7 +467,12 @@ $(document).ready(function(){
 	    	data : formData,	//서버로 전송할 데이터
 	    	type : 'POST',	//서버 요청 타입(GET, POST)
 	    	dataType : 'json',	// 서버로부터 반환받을 데이터 타입
-	    	
+	    	success : function(result){
+	    		console.log(result);
+	    	},
+	    	error : function(result){
+	    		alert("이미지 파일이 아닙니다.");
+	    	}
 		});
 		
 		

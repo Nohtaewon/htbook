@@ -3,7 +3,10 @@ package com.ht.book.controller;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +14,9 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.book.service.BookService;
 import com.ht.common.Criteria;
@@ -116,11 +123,38 @@ public class BookController {
 	
 	
 	// 첨부파일업로드
-	@PostMapping("/uploadAjaxAction")
-	@ResponseBody
-	public void uploadAjaxActionPOST(MultipartFile[] uploadFile) {
+	@PostMapping(value="/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<AttachImageVO>> uploadAjaxActionPOST(MultipartFile[] uploadFile) {
 		
 		log.info("uploadAjaxActionPOST");
+		
+		// 이미지 파일 체크
+		for(MultipartFile multipartFile: uploadFile) {
+			// 전달받은 파일
+			File checkfile = new File(multipartFile.getOriginalFilename());
+			// MIME TYPE을 저장할 String 타입의 type 변수를 선언, 초기화
+			String type = null;
+			// Files의 probeContetype() 메서드를 호출하여 반환하는 MIME TYPE 데이터를 type 변수에 대입
+			try {
+				type = Files.probeContentType(checkfile.toPath());
+				log.info("MIME TYPE:" +type);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(!type.startsWith("image")) {
+				List<AttachImageVO> list = null;
+				return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+			}
+		
+		
+		
+		
+		}
+		
+		
+		
+		
 		String uploadFolder = "c:\\storage";
 		
 		// SimpleDateForamt은 Date 클래스를 통해 얻은 오늘의 날짜를 지정된 형식의 문자열 데이터로 생성하기 위해서 사용을 합니다. 
@@ -140,12 +174,24 @@ public class BookController {
 			uploadPath.mkdirs();
 		}
 		
+		// 이미지 정보 담는 객체
+		List<AttachImageVO> list = new ArrayList<AttachImageVO>();
+		
+		
+		
 		for(MultipartFile multipartFile : uploadFile) {
+
+			// 이미지 정보 객체
+			AttachImageVO vo = new AttachImageVO();
+			
 			// 파일 이름 
 			String uploadFileName = multipartFile.getOriginalFilename();			
+			vo.setFileName(uploadFileName);
+			vo.setUploadPath(datePath);
 			
 			// uuid 적용 파일 이름 
 			String uuid = UUID.randomUUID().toString();
+			vo.setUuid(uuid);
 			
 			uploadFileName = uuid + "_" + uploadFileName;
 			
@@ -192,19 +238,18 @@ public class BookController {
 				Thumbnails.of(saveFile)
 		        .size(160, 160)
 		        .toFile(thumbnailFile);
-				
-				
-				
-				
-				
-				
-				
-				
+						
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
-		}
+			
+			list.add(vo);
+		}//for
+		
+		ResponseEntity<List<AttachImageVO>> result = new ResponseEntity<List<AttachImageVO>>(list, HttpStatus.OK);
+		
+		return result;
 
 	}
 	
