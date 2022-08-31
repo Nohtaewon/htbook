@@ -10,15 +10,6 @@
 }
 
 
- 
-#mail_check_input_box_false{
-    background-color:#ebebe4;
-}
- 
-#mail_check_input_box_true{
-    background-color:white;
-}
-
 *{
 	margin: 0;
 	padding:0;
@@ -26,12 +17,12 @@
 
 /* 화면 전체 렙 */
 .wrapper{
-	width: 1900px;	
+	width: 100%;
 }
 
 /* content 랩 */
 .wrap{
-	width : 800px;
+	width : 600px;
 	margin: auto;
 }
 /* 페이지 제목 */
@@ -270,3 +261,34 @@
 	clear: both;
 }
 
+/* 유효성 검사 문구 */
+ 
+.final_id_ck{
+    display: none;
+}
+.final_pw_ck{
+    display: none;
+}
+.final_pwck_ck{
+    display: none;
+}
+.final_user_ck{
+    display: none;
+}
+.final_mail_ck{
+    display: none;
+}
+.final_addr_ck{
+    display: none;
+}
+
+
+/* 비밀번호 확인 일치 유효성검사 */
+.pwck_input_success{
+        color : green;
+        display : none;    
+}
+.pwck_input_error{
+        color : red;
+        display : none;    
+}  
