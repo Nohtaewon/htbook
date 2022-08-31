@@ -481,6 +481,11 @@ $(document).ready(function(){
 	// 이미지 업로드 
 	$("input[type='file']").on("change", function(e){
 		
+		// 이미지 존재시 삭제 
+		if($(".imgDeleteBtn").length > 0){
+			deleteFile();
+		}
+		
 		let formData = new FormData();
 		let fileInput = $('input[name="uploadFile"]');
 		let fileList = fileInput[0].files;
@@ -552,17 +557,55 @@ $(document).ready(function(){
 			let str = "";
 			
 			// let fileCallPath = obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName;
-			let fileCallPath = obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName;
+			// let fileCallPath = obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName;
+			// encodeURIComponent() 메서드를 활용하여 코드를 보완 모든 문자를 UTF-8로 인코딩
+			let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
 			
 			str += "<div id='result_card'>";
 			str += "<img src='/book/display?fileName=" + fileCallPath +"'>";
-			str += "<div class='imgDeleteBtn'>x</div>";
+			str += "<div class='imgDeleteBtn' data-file='" + fileCallPath + "'>x</div>";
 			str += "</div>";		
 			
 	   		uploadResult.append(str);    
 	}
 	
+	// 이미지 삭제 버튼 동작 
+	// 'x'가 출력되어 있는 <div> 태그는 웹 페이지가 완전히 렌더링 된 이후 Javascript 코드를 통해 새롭게 출력된(동적으로 출력된) 태그이기 때문입니다. 
+	// 따라서 on()을 사용하여 아래와 같이 작성을 해주어야 합니다.
+	$("#uploadResult").on("click", ".imgDeleteBtn", function(e){
+		
+		deleteFile();
+		
+	});
 	
+	
+	
+	// 파일 삭제 메서드
+	function deleteFile(){
+		
+		let targetFile = $(".imgDeleteBtn").data("file");
+		
+		let targetDiv = $("#result_card");
+		
+		$.ajax({
+			url: '/book/deleteFile',
+			data : {fileName : targetFile},
+			dataType : 'text',
+			type : 'POST',
+			success : function(result){
+				console.log(result);
+				
+				// 미리보기 이미지를 삭제해 주고 파일 <input> 태그를 초기화
+				targetDiv.remove();
+				$("input[type='file']").val("");
+			},
+			error : function(result){
+				console.log(result);
+				
+				alert("파일을 삭제하지 못하였습니다.")
+			}
+       	});
+	}
 
 </script>
 </body>
