@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
-public class BookController {
+public class MainController {
 	
 	
 	@RequestMapping(value = "/main",method = RequestMethod.GET)
