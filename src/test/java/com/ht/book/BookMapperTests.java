@@ -23,7 +23,7 @@ public class BookMapperTests {
 	@Autowired
 	private BookMapper mapper;
 	
-	
+	/*
 	// 상품 등록
 	@Test
 	public void bookEnrollTest() throws Exception{
@@ -43,7 +43,7 @@ public class BookMapperTests {
 		System.out.println("Before BookVO :" + book);
 		mapper.bookEnroll(book);
 		System.out.println("After BookVO :" + book);
-	}
+	}*/
 	/*
 	// 카테고리 리스트
 	@Test
@@ -123,5 +123,12 @@ public class BookMapperTests {
 		
 	}*/
 	
+	// 지정상품 이미지 삭제
+	@Test
+	public void deleteImageAllTest() {
+		int bookId = 732;
+		mapper.deleteImageAll(bookId);
+		
+	}
 	
 }

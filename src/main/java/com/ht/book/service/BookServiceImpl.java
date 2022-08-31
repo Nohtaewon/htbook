@@ -75,9 +75,25 @@ public class BookServiceImpl implements BookService{
 		return bookMapper.goodsGetDetail(bookId);
 	}
 
+	@Transactional
 	@Override
 	public int goodsModify(BookVO vo) {
-		return bookMapper.goodsModify(vo);
+		
+		int result = bookMapper.goodsModify(vo);
+		
+		if(result == 1 && vo.getImageList() != null && vo.getImageList().size() > 0) {
+					
+			bookMapper.deleteImageAll(vo.getBookId());
+
+			vo.getImageList().forEach(attach -> {
+				
+				attach.setBookId(vo.getBookId());
+				bookMapper.imageEnroll(attach);
+				
+			});
+		}
+		
+		return result;
 	}
 
 	@Override
