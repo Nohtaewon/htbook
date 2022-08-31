@@ -3,6 +3,13 @@
 <mapper namespace="com.ht.mapper.BookMapper">
 <!-- 작가 등록 -->
 <insert id="bookEnroll">
+	
+	<selectKey resultType="int" keyProperty="bookId" order="AFTER">
+  		
+		SELECT bookSeq.CURRVAL FROM dual
+		
+	</selectKey>
+
 	insert into book(bookId, bookName, authorId, publeYear, publisher, cateCode, bookPrice, bookStock, bookDiscount, bookIntro, bookContents)
 	values(bookSeq.nextval, #{bookName},#{authorId}, #{publeYear},#{publisher},#{cateCode},#{bookPrice},#{bookStock},#{bookDiscount},#{bookIntro},#{bookContents})
 </insert>
@@ -55,4 +62,9 @@
 	<delete id="goodsDelete">
 		delete from book where bookId = #{bookId}
 	</delete>
+	
+	<!-- 이미지 등록 -->
+	<insert id="imageEnroll">
+		insert into bimage(bookId, fileName, uploadPath, uuid) values (#{bookId}, #{fileName}, #{uploadPath}, #{uuid})
+	</insert>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.common.Criteria;
 import com.ht.mapper.BookMapper;
@@ -22,7 +23,7 @@ public class BookMapperTests {
 	@Autowired
 	private BookMapper mapper;
 	
-	/*
+	
 	// 상품 등록
 	@Test
 	public void bookEnrollTest() throws Exception{
@@ -30,18 +31,19 @@ public class BookMapperTests {
 		
 		
 		book.setBookName("mapper 테스트");
-		book.setAuthorId(123);
-		book.setPubleYear("2022-08-26");
+		book.setAuthorId(27);
+		book.setPubleYear("2021-03-16");
 		book.setPublisher("출판사");
-		book.setCateCode("0231");
+		book.setCateCode("202001");
 		book.setBookPrice(20000);
 		book.setBookStock(300);
 		book.setBookDiscount(0.23);
 		book.setBookIntro("책 소개");
 		book.setBookContents("책 목차");
-		
+		System.out.println("Before BookVO :" + book);
 		mapper.bookEnroll(book);
-	}*/
+		System.out.println("After BookVO :" + book);
+	}
 	/*
 	// 카테고리 리스트
 	@Test
@@ -95,7 +97,7 @@ public class BookMapperTests {
 		
 	}
 	 */
-	
+	/*
 	// 상품 정보 삭제
 	@Test
 	public void goodsDeleteTest() {
@@ -104,5 +106,22 @@ public class BookMapperTests {
 		if(result == 1) {
 			System.out.println("삭제 성공");
 		}
-	}
+	}*/
+	/*
+	// 이미지 등록
+	@Test
+	public void imageEnrollTest() {
+		
+		AttachImageVO vo = new AttachImageVO();
+		
+		vo.setBookId(137);
+		vo.setFileName("test");
+		vo.setUploadPath("test");
+		vo.setUuid("test2");
+		
+		mapper.imageEnroll(vo);
+		
+	}*/
+	
+	
 }

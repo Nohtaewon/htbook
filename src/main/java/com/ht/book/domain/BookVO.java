@@ -1,6 +1,7 @@
 package com.ht.book.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -36,5 +37,7 @@ public class BookVO {
 	private Date regDate;
 	// 수정 날짜
 	private Date updateDate;
+	// 이미지 정보
+	private List<AttachImageVO> imageList;
 	
 }

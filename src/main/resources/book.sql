@@ -77,4 +77,24 @@ insert into bcate(tier, cateName, cateCode) values (1, '국외', '200000');
         insert into bcate(tier, cateName, cateCode, cateParent) values (3, '교양과학', '204001','204000');    
         insert into bcate(tier, cateName, cateCode, cateParent) values (3, '물리학', '204002','204000');    
         insert into bcate(tier, cateName, cateCode, cateParent) values (3, '수학', '204003','204000');
+
+-- 상품 이미지 테이블
+create table bimage(
+        bookId number,
+        fileName varchar2(100) not null,
+        uploadPath varchar2(200) not null,
+        uuid varchar2(100)not null ,
+        primary key (uuid),
+        foreign key (bookId) references book(bookId)
+);       
+        
+        
+-- 시퀀스 값 알기 (테스트 입니다)
+select last_number from user_sequences where sequence_name='BOOKSEQ';
+select bookSeq.nextval from dual;
+select bookSeq.currval from dual;       
+        
+        
+        
+        
 commit;

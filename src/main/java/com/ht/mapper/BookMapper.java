@@ -2,6 +2,7 @@ package com.ht.mapper;
 
 import java.util.List;
 
+import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
@@ -28,4 +29,7 @@ public interface BookMapper {
 	
 	// 상품 정보 삭제
 	public int goodsDelete(int bookId);
+	
+	// 이미지 등록
+	public void imageEnroll(AttachImageVO vo);
 }

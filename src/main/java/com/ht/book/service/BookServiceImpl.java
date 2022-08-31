@@ -26,6 +26,28 @@ public class BookServiceImpl implements BookService{
 		
 		bookMapper.bookEnroll(book);
 		
+		if(book.getImageList() == null || book.getImageList().size() <= 0) {
+			return;
+		}
+		
+		// 여러개 이미지 처리 
+		/*
+		// 일반적 for문
+        for(int i = 0; i < book.getImageList().size(); i++) {
+			
+		}
+		
+        // 향상된 for문
+		for(AttachImageVO attach : book.getImageList()) {
+			
+		}*/
+        //람다식 활용한 for문
+		book.getImageList().forEach(attach ->{
+			// 이미지 등록
+			attach.setBookId(book.getBookId());
+			bookMapper.imageEnroll(attach);
+		});
+		
 	}
 
 	@Override
