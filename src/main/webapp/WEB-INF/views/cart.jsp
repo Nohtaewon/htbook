@@ -83,9 +83,31 @@
 		        $(".delete_cart_id").val(cartId);
 		        $(".quantity_delete_form").submit();
 		    }
-
-
 		    
+		});
+		
+		// 주문 페이지 이동
+		$(".order_btn").on("click", function(){
+			let fromContents ='';
+			let orderNumber = 0; // order 의 index 역활
+			$(".cart_info_td").each(function(index, element){
+				
+				let bookId = $(element).find(".individual_bookId_input").val();
+				let bookCount = $(element).find(".individual_bookCount_input").val();
+				
+				let bookIdInput = "<input name='orders[" + orderNumber + "].bookId' type='hidden' value='" + bookId + "'>";
+				fromContents += bookIdInput;
+				
+				let bookCountInput = "<input name='orders[" + orderNumber + "].book_count' type='hidden' value='" + bookCount + "'>";
+				fromContents += bookCountInput
+				
+				orderNumber += 1;
+
+			});
+			
+			$(".order_form").html(fromContents);
+			console.log(fromContents);
+			$(".order_form").submit();
 		});
 		
 	});
@@ -267,6 +289,11 @@
 					<input type="hidden" name="member_id" value="${member.member_id }">
 				
 				</form>
+				
+				<!-- 주문 form -->
+				<form action="/order/${member.member_id}" method="get" class="order_form">
+				
+				</form>
 				<table class="cart_table">
 					<caption>표 내용 부분</caption>
 					<tbody>
@@ -280,6 +307,7 @@
 									<input type="hidden" class="individual_totalPrice_input" value="${ci.sale_price * ci.book_count}">
 									<input type="hidden" class="individual_point_input" value="${ci.point}">
 									<input type="hidden" class="individual_totalPoint_input" value="${ci.total_point}">
+									<input type="hidden" class="individual_bookId_input" value="${ci.bookId}">
 									
 								</td>
 								<td class="td_width_2"></td>
@@ -386,7 +414,7 @@
 			</div>
 			<!-- 구매 버튼 영역 -->
 			<div class="content_btn_section">
-				<a>주문하기</a>
+				<a class="order_btn">주문하기</a>
 			</div>
 			
 		</div>
