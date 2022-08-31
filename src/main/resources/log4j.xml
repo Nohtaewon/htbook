@@ -20,7 +20,7 @@
 		<level value="info" />
 	</logger>
 	
-	<!-- order Application Loggers -->
+	<!-- order Application Loggers --> 
 	<logger name="com.ht.order.controller">
 		<level value="info" />
 	</logger>
