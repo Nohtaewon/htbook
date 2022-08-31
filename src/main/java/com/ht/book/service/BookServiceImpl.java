@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ht.book.domain.BookVO;
 import com.ht.book.domain.CateVO;
@@ -20,6 +21,7 @@ public class BookServiceImpl implements BookService{
 	private BookMapper bookMapper;
 	
 	// 상품 등록
+	@Transactional
 	@Override
 	public void bookEnroll(BookVO book) {
 		log.info("bookEnroll.........");

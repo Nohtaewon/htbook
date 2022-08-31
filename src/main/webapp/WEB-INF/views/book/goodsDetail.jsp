@@ -10,6 +10,16 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="../resources/css/book/goodsDetail.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+<style type="text/css">
+	#result_card img{
+		max-width: 100%;
+	    height: auto;
+	    display: block;
+	    padding: 5px;
+	    margin-top: 10px;
+	    margin: auto;	
+	}
+</style>
 </head>
 <body>
 	<%@include file="../common/header.jsp"%>
@@ -141,7 +151,16 @@
 					<textarea name="bookContents" id="bookContents_textarea" disabled>${goodsInfo.bookContents}</textarea>
 				</div>
 			</div>
-
+			<div class="form_section">
+       			<div class="form_section_title">
+       				<label>상품 이미지</label>
+       			</div>
+            	<div class="form_section_content">
+					<div id="uploadReslut">
+														
+					</div>
+       			</div>
+            </div>
 			<div class="btn_section">
 				<button id="cancelBtn" class="btn">상품 목록</button>
 				<button id="modifyBtn" class="btn enroll_btn">수정</button>
@@ -277,6 +296,38 @@ $(document).ready(function(){
 			$(obj).attr("selected", "selected");
 		}
 	});
+	
+	// 이미지 정보 호출 
+	let bookId = '<c:out value="${goodsInfo.bookId}"/>';
+	let uploadReslut = $("#uploadReslut");
+	
+	$.getJSON("/getAttachList", {bookId : bookId}, function(arr){	
+		
+		// 이미지 없는 경우
+		if(arr.length === 0){	
+			let str = "";
+			str += "<div id='result_card'>";
+			str += "<img src='/resources/img/goodsNoImage.png'>";
+			str += "</div>";
+			
+			uploadReslut.html(str);
+			return;
+		}
+		
+		let str = "";
+		let obj = arr[0];
+		
+		let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+		str += "<div id='result_card'";
+		str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
+		str += ">";
+		str += "<img src='/book/display?fileName=" + fileCallPath +"'>";
+		str += "</div>";
+		
+		uploadReslut.html(str);
+		
+	});
+	
 	
 	
 }); // $(document).ready
