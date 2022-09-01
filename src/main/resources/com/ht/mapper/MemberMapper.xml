@@ -17,4 +17,13 @@
 		where member_id = #{member_id}
 	</select>
 	
+	<!-- 주문자 정보 -->
+	<select id="getMemberInfo" resultType="com.ht.member.domain.MemberVO">
+		
+		select member_id, member_name, member_mail, member_addr1, member_addr2, member_addr3, money, point
+		from book_member
+		where member_id = #{member_id}
+		
+	</select>
+	
  </mapper>
