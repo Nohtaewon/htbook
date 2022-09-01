@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
@@ -81,9 +82,10 @@ public class BookServiceImpl implements BookService{
 		
 		int result = bookMapper.goodsModify(vo);
 		
+		bookMapper.deleteImageAll(vo.getBookId());
 		if(result == 1 && vo.getImageList() != null && vo.getImageList().size() > 0) {
 					
-			bookMapper.deleteImageAll(vo.getBookId());
+
 
 			vo.getImageList().forEach(attach -> {
 				
@@ -97,8 +99,16 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
+	@Transactional
 	public int goodsDelete(int bookId) {
+		bookMapper.deleteImageAll(bookId);
 		return bookMapper.goodsDelete(bookId);
+	}
+
+	@Override
+	public List<AttachImageVO> getAttachInfo(int bookId) {
+		
+		return bookMapper.getAttachInfo(bookId);
 	}
 
 }

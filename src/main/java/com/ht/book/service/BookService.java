@@ -2,6 +2,7 @@ package com.ht.book.service;
 
 import java.util.List;
 
+import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
@@ -28,4 +29,7 @@ public interface BookService {
 	
 	// 상품 정보 삭제
 	public int goodsDelete(int bookId);
+	
+	// 지정 상품 이미지 정보 얻기
+	public List<AttachImageVO> getAttachInfo(int bookId);
 }

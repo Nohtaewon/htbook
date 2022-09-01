@@ -126,9 +126,24 @@ public class BookMapperTests {
 	// 지정상품 이미지 삭제
 	@Test
 	public void deleteImageAllTest() {
-		int bookId = 732;
+		int bookId = 741;
 		mapper.deleteImageAll(bookId);
 		
 	}
+	/* 어제자 날짜 이미지 리스트
+	@Test
+	public void checkImageListTest() {
+		mapper.checkFileList();
+	}*/
+	/*
+	// 지정 상품 이미지 정보 얻기
+	@Test
+	public void getAttachInfoTest() {
+		
+		int bookId = 734;	
+		List<AttachImageVO> list = mapper.getAttachInfo(bookId);
+		System.out.println("list : " + list);
+		
+	}*/
 	
 }
