@@ -20,6 +20,11 @@
 		<level value="info" />
 	</logger>
 	
+	<!-- order Application Loggers --> 
+	<logger name="com.ht.order.controller">
+		<level value="info" />
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
