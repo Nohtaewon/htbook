@@ -122,14 +122,14 @@ public class BookMapperTests {
 		mapper.imageEnroll(vo);
 		
 	}*/
-	
+	/*
 	// 지정상품 이미지 삭제
 	@Test
 	public void deleteImageAllTest() {
 		int bookId = 741;
 		mapper.deleteImageAll(bookId);
 		
-	}
+	}*/
 	/* 어제자 날짜 이미지 리스트
 	@Test
 	public void checkImageListTest() {
@@ -145,5 +145,7 @@ public class BookMapperTests {
 		System.out.println("list : " + list);
 		
 	}*/
+	
+	
 	
 }

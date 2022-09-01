@@ -82,4 +82,5 @@
 	<select id="getAttachInfo" resultType="com.ht.book.domain.AttachImageVO">
 		select * from bimage where bookId = #{bookId}
 	</select>
+	
 </mapper>

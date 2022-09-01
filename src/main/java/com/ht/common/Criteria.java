@@ -17,6 +17,12 @@ public class Criteria {
     // 검색 키워드 
     private String keyword;
     
+    // 작가 리스트
+    private String[] authorArr;
+    
+    // 카테고리 코드
+    private String cateCode;
+    
     // Criteria 생성자 
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
