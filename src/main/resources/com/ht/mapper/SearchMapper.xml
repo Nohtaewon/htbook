@@ -33,7 +33,7 @@
 	    select * from(
 	        select /*+INDEX_DESC(book SYS_C004411)*/ rownum as rn, bookId, bookName,
 	            (select authorName from author where book.authorId = author.authorId) authorName, authorId,
-	            (select cateName from bcate where book.cateCode = bcate.cateCode) cateName,cateCode, publisher, publeYear, bookPrice  
+	            (select cateName from bcate where book.cateCode = bcate.cateCode) cateName,cateCode, publisher, publeYear, bookPrice, bookDiscount  
 	        from book
 	        where 
     ]]>

@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.common.Criteria;
+import com.ht.mapper.AttachMapper;
 import com.ht.mapper.BookMapper;
 import com.ht.mapper.SearchMapper;
 
@@ -20,6 +22,10 @@ public class SearchServiceImpl implements SearchService{
 	@Autowired
 	private SearchMapper searchMapper;
 	
+	@Autowired
+	private AttachMapper attachMapper;
+	
+	// 상품 검색
 	@Override
 	public List<BookVO> getGoodsList(Criteria cri) {
 		
@@ -40,7 +46,15 @@ public class SearchServiceImpl implements SearchService{
 			}
 		}
 		
-		return searchMapper.getGoodsList(cri);
+		List<BookVO> list = searchMapper.getGoodsList(cri);
+		
+		list.forEach(book->{
+			int bookId = book.getBookId();
+			List<AttachImageVO> imageList = attachMapper.getAttachList(bookId);
+			book.setImageList(imageList);
+		});
+			
+		return list;
 	}
 
 	@Override
