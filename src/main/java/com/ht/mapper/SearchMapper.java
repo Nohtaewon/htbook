@@ -3,6 +3,7 @@ package com.ht.mapper;
 import java.util.List;
 
 import com.ht.book.domain.BookVO;
+import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
 
 public interface SearchMapper {
@@ -15,4 +16,10 @@ public interface SearchMapper {
 	
 	// 작가 id 리스트 요청
 	public String[] getAuthorIdList(String keyword);
+	
+	// 국내 카테고리 테스트
+	public List<CateVO> getCateCode1();
+	
+	// 국외 카테고리 테스트
+	public List<CateVO> getCateCode2();
 }

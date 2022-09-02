@@ -20,7 +20,7 @@
 							cateCode like '%' || #{cateCode} || '%'
 						</when>
 						<when test="type == 'T'.toString()">
-							bookName like '%' || #{keyword} || '%'
+							bookName like '%' || #{keyword, jdbcType=VARCHAR} || '%'
 						</when>
 					</choose>
 				</trim>
@@ -54,6 +54,20 @@
 
 	<!-- 작가 id 리스트 요청 -->
 	<select id="getAuthorIdList" resultType="String">
-		select authorid from author where authorName like '%' || #{keyword} || '%'
+		select authorid from author where authorName like '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	</select>
+	
+	<!-- 국내 카테고리 리스트 -->
+	<select id="getCateCode1" resultType="com.ht.book.domain.CateVO">
+		<![CDATA[
+			select * from bcate where cateCode > 100000 and cateCode < 200000
+		]]>
+	</select>
+	
+	<!-- 외국 카테고리 리스트 -->
+	<select id="getCateCode2" resultType="com.ht.book.domain.CateVO">
+		<![CDATA[
+			select * from bcate where cateCode > 200000 and cateCode < 300000
+		]]>
 	</select>
 </mapper>

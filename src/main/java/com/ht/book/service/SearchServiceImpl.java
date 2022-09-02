@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
+import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
 import com.ht.mapper.AttachMapper;
 import com.ht.mapper.BookMapper;
@@ -63,6 +64,18 @@ public class SearchServiceImpl implements SearchService{
 		log.info("goodsGetTotal().......");
 		
 		return searchMapper.goodsGetTotal(cri);
+	}
+
+	@Override
+	public List<CateVO> getCateCode1() {
+
+		return searchMapper.getCateCode1();
+	}
+
+	@Override
+	public List<CateVO> getCateCode2() {
+
+		return searchMapper.getCateCode2();
 	}
 
 }

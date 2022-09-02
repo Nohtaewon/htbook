@@ -28,7 +28,7 @@
 		    where 
 		]]>    
 		    <if test="keyword != null">   
-			    bookName like '%' || #{keyword} || '%' and    
+			    bookName like '%' || #{keyword, jdbcType=VARCHAR} || '%' and    
 		    </if>  
 		<![CDATA[    
 		    rownum <= #{pageNum} * #{amount} 
@@ -41,7 +41,7 @@
   	<select id="goodsGetTotal" resultType="int">
   		select count(*) from book
   		<if test="keyword != null">
-  			where bookName like '%' || #{keyword} || '%'
+  			where bookName like '%' || #{keyword, jdbcType=VARCHAR} || '%'
   		</if>
   	</select>
   	<!-- 상품 조회 페이지 -->
