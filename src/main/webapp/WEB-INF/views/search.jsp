@@ -137,7 +137,9 @@
 											[${list.cateName}]
 										</div>
 										<div class="title">
+											<a href="/userGoodsDetail/${list.bookId}">
 											${list.bookName}
+											</a>
 										</div>
 										<div class="author">
 											<fmt:parseDate var="publeYear" value="${list.publeYear}" pattern="yyyy-MM-dd" />

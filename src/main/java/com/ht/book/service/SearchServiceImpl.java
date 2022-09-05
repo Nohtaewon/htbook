@@ -27,6 +27,9 @@ public class SearchServiceImpl implements SearchService{
 	@Autowired
 	private AttachMapper attachMapper;
 	
+	@Autowired
+	private BookMapper bookMapper;
+	
 	// 상품 검색
 	@Override
 	public List<BookVO> getGoodsList(Criteria cri) {
@@ -107,6 +110,14 @@ public class SearchServiceImpl implements SearchService{
 		}
 		cri.setCateCode(tempCateCode);
 		return filterInfoList;
+	}
+
+	@Override
+	public BookVO getGoodsInfo(int bookId) {
+		BookVO goodsInfo = searchMapper.getGoodsInfo(bookId);
+		goodsInfo.setImageList(bookMapper.getAttachInfo(bookId));
+		
+		return goodsInfo;
 	}
 
 }

@@ -156,9 +156,9 @@ public class SearchMapperTests {
 		System.out.println("cri : " + cri);
 		System.out.println("list : " + list);	
 		
-	}*/
+	}
 	
-	/* 카테고리 리스트 */
+	// 카테고리 리스트 
 	@Test
 	public void getCateListTest1() {
 		
@@ -181,7 +181,7 @@ public class SearchMapperTests {
 		
 	}
 	
-	/* 카테고리 정보 얻기 */	
+	// 카테고리 정보 얻기 	
 	@Test
 	public void getCateInfoTest1() {
 		
@@ -198,7 +198,17 @@ public class SearchMapperTests {
 		mapper.getCateInfo(cri);
 		
 	}
-	
+	*/
+	// 상품정보
+	@Test
+	public void getGoodsInfo() {
+		int bookId = 743;
+		BookVO goodsInfo = mapper.getGoodsInfo(bookId);
+		System.out.println("===========================");
+		System.out.println(goodsInfo);
+		System.out.println("===========================");
+		
+	}
 	
 	
 	
