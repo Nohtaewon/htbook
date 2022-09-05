@@ -40,6 +40,13 @@ public class SearchController {
 		
 		model.addAttribute("pageMaker", new PageDTO(cri, searchService.goodsGetTotal(cri)));
 		
+		String[] typeArr = cri.getType().split("");
+		
+		for(String s : typeArr) {
+			if(s.equals("T") || s.equals("A")) {
+				model.addAttribute("filter_info", searchService.getCateInfoList(cri));		
+			}
+		}
 		
 		return "search";
 		

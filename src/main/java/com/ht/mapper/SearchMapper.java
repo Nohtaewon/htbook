@@ -3,6 +3,7 @@ package com.ht.mapper;
 import java.util.List;
 
 import com.ht.book.domain.BookVO;
+import com.ht.book.domain.CateFilterDTO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
 
@@ -22,4 +23,10 @@ public interface SearchMapper {
 	
 	// 국외 카테고리 테스트
 	public List<CateVO> getCateCode2();
+	
+	// 검색 대상 카테고리 리스트
+	public String[] getCateList(Criteria cri);
+	
+	// 카테고리 정보(+검색대상 갯수)
+	public CateFilterDTO getCateInfo(Criteria cri);
 }

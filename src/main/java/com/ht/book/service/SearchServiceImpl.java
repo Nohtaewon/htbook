@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
+import com.ht.book.domain.CateFilterDTO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
 import com.ht.mapper.AttachMapper;
@@ -76,6 +77,36 @@ public class SearchServiceImpl implements SearchService{
 	public List<CateVO> getCateCode2() {
 
 		return searchMapper.getCateCode2();
+	}
+
+	@Override
+	public List<CateFilterDTO> getCateInfoList(Criteria cri) {
+		List<CateFilterDTO> filterInfoList = new ArrayList<CateFilterDTO>();
+		
+		String[] typeArr = cri.getType().split("");
+		String [] authorArr;
+		
+		for(String type : typeArr) {
+			if(type.equals("A")){
+				authorArr = searchMapper.getAuthorIdList(cri.getKeyword());
+				if(authorArr.length == 0) {
+					return filterInfoList;
+				}
+				cri.setAuthorArr(authorArr);
+			}
+		}
+		String[] cateList = searchMapper.getCateList(cri);
+		
+		// 임시로 Criteria 객체에 있는 'cateCode' 값을 저장해 줄 String 타입의 변수
+		String tempCateCode = cri.getCateCode();
+		
+		for(String cateCode : cateList) {
+			cri.setCateCode(cateCode);
+			CateFilterDTO filterInfo = searchMapper.getCateInfo(cri);
+			filterInfoList.add(filterInfo);
+		}
+		cri.setCateCode(tempCateCode);
+		return filterInfoList;
 	}
 
 }

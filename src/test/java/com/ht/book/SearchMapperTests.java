@@ -158,7 +158,46 @@ public class SearchMapperTests {
 		
 	}*/
 	
+	/* 카테고리 리스트 */
+	@Test
+	public void getCateListTest1() {
+		
+		Criteria cri = new Criteria();
+		
+		String type = "TC";
+		String keyword = "테스트";
+		//String type = "A";
+		//String keyword = "유홍준";		
+
+		cri.setType(type);
+		cri.setKeyword(keyword);
+		//cri.setAuthorArr(mapper.getAuthorIdList(keyword));		
+		
+		String[] cateList = mapper.getCateList(cri)		;
+		for(String codeNum : cateList) {
+			System.out.println("codeNum ::::: " + codeNum);
+		}
+		
+		
+	}
 	
+	/* 카테고리 정보 얻기 */	
+	@Test
+	public void getCateInfoTest1() {
+		
+		Criteria cri = new Criteria();
+		
+		String type = "TC";
+		String keyword = "테스트";	
+		String cateCode="104001";
+
+		cri.setType(type);
+		cri.setKeyword(keyword);
+		cri.setCateCode(cateCode);
+		
+		mapper.getCateInfo(cri);
+		
+	}
 	
 	
 	
