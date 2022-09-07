@@ -73,9 +73,9 @@ $(document).ready(function(){
 		</div>
 		
 		<div class="top_area">
-			<h1>logo area</h1>
-		</div>
-		
+			<div class="logo_area">
+				<a href="/main"><img src="resources/img/r2.png"></a>
+			</div>
 		<div class="search_area">
 			<div class="search_wrap">
            		<form id="searchForm" action="/search" method="get">
@@ -90,7 +90,6 @@ $(document).ready(function(){
            		</form>
            	</div>
 		</div>
-		
 		<div class="login_area">
 			<!-- 로그인 하지 않은 상태 -->
 			<c:if test = "${member == null }">
@@ -109,7 +108,9 @@ $(document).ready(function(){
 			</c:if>
 		</div>
 		<div class="clearfix"></div>
-	</div>
+		</div>
+		
+		
 	<div class="navi_bar_area">
 		<div class="dropdown">
 			<button class="dropbtn">국내 
@@ -131,6 +132,7 @@ $(document).ready(function(){
 		    	</c:forEach>      		      		      
 		    </div>	
 		</div>
+	</div>
 	</div>
 </div>
 	
