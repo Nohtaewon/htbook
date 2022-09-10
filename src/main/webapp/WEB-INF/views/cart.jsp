@@ -10,185 +10,163 @@
 <link rel="stylesheet" href="/resources/css/cart.css">
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	$(document).ready(function(){
+$(document).ready(function(){
+	
+	// 로그아웃 버튼 작동
+	$("#gnb_logout_button").click(function(){
+		//alert("버튼 작동");
 		
-		// 로그아웃 버튼 작동
-		$("#gnb_logout_button").click(function(){
-			//alert("버튼 작동");
-			
-			$.ajax({
-				type:"POST",
-				url:"/member/logout",
-				success:function(data){
-					alert("로그아웃 성공");
-					document.location.reload();
-				}
-			});
-		});	
-		
-		setTotalInfo();
-		
-		// 체크여부에 따른 정보 변화
-		$(".individual_cart_checkbox").on("change", function(){
-			
-			// 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수 , 종류)
-			setTotalInfo($(".cart_info_td"));
-		});
-		
-		// 체크박스 전체 선택
-		$(".all_check_input").on("click", function(){
-			
-			// 체크박스 체크or 해제	
-			if($(".all_check_input").prop("checked")){
-				$(".individual_cart_checkbox").prop("checked", true);
-			} else{
-				$(".individual_cart_checkbox").prop("checked", false);
-			}
-			
-			// 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수 , 종류)
-			setTotalInfo($(".cart_info_td"));
-		});
-		
-		//수량 수정 버튼
-		$(".quantity_modify_btn").on("click", function(){
-			let cartId = $(this).data("cart_id");
-			let bookCount = $(this).parent("td").find("input").val();
-			$(".update_cart_id").val(cartId);
-			$(".update_book_count").val(bookCount);
-			$(".quantity_update_form").submit();
-			
-			
-		});
-		
-		// 수량 추가/감소 버튼
-		$(".plus_btn").on("click", function(){
-			let quantity = $(this).parent("div").find("input").val()
-			$(this).parent("div").find("input").val(++quantity);
-		});
-		
-		$(".minus_btn").on("click", function(){
-			let quantity = $(this).parent("div").find("input").val()
-			$(this).parent("div").find("input").val(--quantity);
-		});
-		
-		// 장바구니 삭제 버특
-		$(".delete_btn").on("click", function(e){
-			e.preventDefault();
-		    if (!confirm("해당 물품을 삭제하시겠습니까?")) {
-		        return;
-		        
-		    } else {
-				let cartId = $(this).data("cart_id");
-		        console.log(cartId)
-		        $(".delete_cart_id").val(cartId);
-		        $(".quantity_delete_form").submit();
-		    }
-		    
-		});
-		
-
-		// 주문 페이지 이동
-		$(".order_btn").on("click", function(){
-			let fromContents ='';
-			let orderNumber = 0; // order 의 index 역활
-			$(".cart_info_td").each(function(index, element){
-				
-				let bookId = $(element).find(".individual_bookId_input").val();
-				let bookCount = $(element).find(".individual_bookCount_input").val();
-				
-				let bookIdInput = "<input name='orders[" + orderNumber + "].bookId' type='hidden' value='" + bookId + "'>";
-				fromContents += bookIdInput;
-				
-				let bookCountInput = "<input name='orders[" + orderNumber + "].book_count' type='hidden' value='" + bookCount + "'>";
-				fromContents += bookCountInput
-				
-				orderNumber += 1;
-
-			});
-			
-			$(".order_form").html(fromContents);
-			console.log(fromContents);
-			$(".order_form").submit();
-
-		// i = 몇 번재 객체인지 순서 값 (배열의 index라 생각)
-		// obj = i번째에서 접근하는 객체
-		$(".image_wrap").each(function(i,obj){
-			const bobj = $(obj);
-			
-			if(bobj.data("bookid")){
-				const uploadPath = bobj.data("path");
-				const uuid = bobj.data("uuid");
-				const fileName = bobj.data("filename")
-				
-				const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
-				
-				$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
-				
-			} else {
-				$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
+		$.ajax({
+			type:"POST",
+			url:"/member/logout",
+			success:function(data){
+				alert("로그아웃 성공");
+				document.location.reload();
 			}
 		});
+	});	
+	
+	setTotalInfo();
+	
+	// 체크여부에 따른 정보 변화
+	$(".individual_cart_checkbox").on("change", function(){
+		
+		// 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수 , 종류)
+		setTotalInfo($(".cart_info_td"));
+	});
+	
+	// 체크박스 전체 선택
+	$(".all_check_input").on("click", function(){
+		
+		// 체크박스 체크or 해제	
+		if($(".all_check_input").prop("checked")){
+			$(".individual_cart_checkbox").prop("checked", true);
+		} else{
+			$(".individual_cart_checkbox").prop("checked", false);
+		}
+		
+		// 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수 , 종류)
+		setTotalInfo($(".cart_info_td"));
+	});
+	
+	//수량 수정 버튼
+	$(".quantity_modify_btn").on("click", function(){
+		let cartId = $(this).data("cart_id");
+		let bookCount = $(this).parent("td").find("input").val();
+		$(".update_cart_id").val(cartId);
+		$(".update_book_count").val(bookCount);
+		$(".quantity_update_form").submit();
+		
 		
 	});
+	
+	// 수량 추가/감소 버튼
+	$(".plus_btn").on("click", function(){
+		let quantity = $(this).parent("div").find("input").val()
+		$(this).parent("div").find("input").val(++quantity);
+	});
+	
+	$(".minus_btn").on("click", function(){
+		let quantity = $(this).parent("div").find("input").val()
+		$(this).parent("div").find("input").val(--quantity);
+	});
+	
+	// 장바구니 삭제 버특
+	$(".delete_btn").on("click", function(e){
+		e.preventDefault();
+	    if (!confirm("해당 물품을 삭제하시겠습니까?")) {
+	        return;
+	        
+	    } else {
+			let cartId = $(this).data("cart_id");
+	        console.log(cartId)
+	        $(".delete_cart_id").val(cartId);
+	        $(".quantity_delete_form").submit();
+	    }
+
+
+	    
+	});
+	
+	// i = 몇 번재 객체인지 순서 값 (배열의 index라 생각)
+	// obj = i번째에서 접근하는 객체
+	$(".image_wrap").each(function(i,obj){
+		const bobj = $(obj);
 		
-		
-	function setTotalInfo(){
-		let totalPrice = 0;				// 총 가격
-		let totalCount = 0;				// 총 갯수
-		let totalKind = 0;				// 총 종류
-		let totalPoint = 0;				// 총 마일리지
-		let deliveryPrice = 0;			// 배송비
-		let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)
-		
-		// 총 가격,갯수,종류,마일리지 얻기
-		$(".cart_info_td").each(function(index, element){
-			if($(element).find(".individual_cart_checkbox").is(":checked") === true){ // 체크 일때
-				
-				totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
-				totalCount += parseInt($(element).find(".individual_bookCount_input").val());
-				totalKind += 1;
-				totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
-			}
+		if(bobj.data("bookid")){
+			const uploadPath = bobj.data("path");
+			const uuid = bobj.data("uuid");
+			const fileName = bobj.data("filename")
 			
+			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
 			
+			$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
 			
-		})
-		
-		// 배송비 결정
-		if(totalPrice >=30000){
-			deliveryPrice = 0;
-		} else if (totalPrice ==0){
-			deliveryPrice = 0;
-		}else {
-			deliveryPrice = 3000;
+		} else {
+			$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
 		}
+	});
+	
+});
+	
+	
+function setTotalInfo(){
+	let totalPrice = 0;				// 총 가격
+	let totalCount = 0;				// 총 갯수
+	let totalKind = 0;				// 총 종류
+	let totalPoint = 0;				// 총 마일리지
+	let deliveryPrice = 0;			// 배송비
+	let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)
+	
+	// 총 가격,갯수,종류,마일리지 얻기
+	$(".cart_info_td").each(function(index, element){
+		if($(element).find(".individual_cart_checkbox").is(":checked") === true){ // 체크 일때
 			
-		// 최종가격
-		finalTotalPrice = totalPrice + deliveryPrice;
-		
-		// 값 넣기
-		
-		// 총 가격
-		$(".totalPrice_span").text(totalPrice);
-		
-		// 총 갯수
-		$(".totalCount_span").text(totalCount);
-		
-		// 총 종류
-		$(".totalKind_span").text(totalKind);
-		
-		// 총 마일리지
-		$(".totalPoint_span").text(totalPoint);
-		
-		// 배송비
-		$(".delivery_price").text(deliveryPrice);	
-		
-		// 최종 가격(총 가격 + 배송비)
-		// 세자리 컴마 toLocaleString() 객체 사용
-		$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());
+			totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
+			totalCount += parseInt($(element).find(".individual_bookCount_input").val());
+			totalKind += 1;
+			totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
+		}
 		
 		
+		
+	})
+	
+	// 배송비 결정
+	if(totalPrice >=30000){
+		deliveryPrice = 0;
+	} else if (totalPrice ==0){
+		deliveryPrice = 0;
+	}else {
+		deliveryPrice = 3000;
 	}
+		
+	// 최종가격
+	finalTotalPrice = totalPrice + deliveryPrice;
+	
+	// 값 넣기
+	
+	// 총 가격
+	$(".totalPrice_span").text(totalPrice);
+	
+	// 총 갯수
+	$(".totalCount_span").text(totalCount);
+	
+	// 총 종류
+	$(".totalKind_span").text(totalKind);
+	
+	// 총 마일리지
+	$(".totalPoint_span").text(totalPoint);
+	
+	// 배송비
+	$(".delivery_price").text(deliveryPrice);	
+	
+	// 최종 가격(총 가격 + 배송비)
+	// 세자리 컴마 toLocaleString() 객체 사용
+	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());
+	
+	
+}
 		
 
 </script>
