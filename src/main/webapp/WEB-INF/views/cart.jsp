@@ -107,6 +107,37 @@ $(document).ready(function(){
 		}
 	});
 	
+	// 주문 페이지 이동
+	$(".order_btn").on("click", function(){
+		let form_contents = ''; //동적으로 생성할 input 태그 문자열
+		let orderNumber =0; // order[i] i의 index 역활
+		
+		// 상품 데이터가 저장된 값들을 <td>태그를 반복 활용해서 접근할 메소드
+		$(".cart_info_td").each(function(index, element){
+			
+			// if문 체크된 상품만 <input>태그로 만들기
+			if($(element).find(".individual_cart_checkbox").is(":checked") === true){
+				let bookId = $(element).find(".individual_bookId_input").val();
+				let bookCount = $(element).find(".individual_bookCount_input").val();
+				
+				let bookId_input = "<input name='orders[" +orderNumber + "].bookId' type ='hidden' value='" + bookId +"'>";
+				form_contents += bookId_input;
+				
+				let bookCount_input = "<input name='orders[" + orderNumber + "].book_count' type='hidden' value='" + bookCount + "'>";
+				form_contents += bookCount_input;
+				
+				orderNumber += 1;
+			}		
+		});
+		
+		//console.log(form_contents);
+		$(".order_form").html(form_contents);
+		$(".order_form").submit();
+		
+	});
+			
+
+	
 });
 	
 	
@@ -167,7 +198,7 @@ function setTotalInfo(){
 	
 	
 }
-		
+
 
 </script>
 </head>
