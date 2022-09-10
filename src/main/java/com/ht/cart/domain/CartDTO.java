@@ -1,5 +1,9 @@
 package com.ht.cart.domain;
 
+import java.util.List;
+
+import com.ht.book.domain.AttachImageVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -40,6 +44,8 @@ public class CartDTO {
 	private int total_point; // 수량을 곱한 총 포인트
 	
 	//상품 이미지
+	@Getter @Setter
+	private List<AttachImageVO> imageList;
 	
 	
 	public void initSaleTotal() {

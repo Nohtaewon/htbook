@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ht.book.domain.AttachImageVO;
 import com.ht.cart.domain.CartDTO;
+import com.ht.mapper.AttachMapper;
 import com.ht.mapper.CartMapper;
 
 @Service
@@ -13,6 +15,9 @@ public class CartServiceImpl implements CartService {
 	
 	@Autowired
 	private CartMapper cartMapper;
+	
+	@Autowired
+	private AttachMapper attachMapper;
 	
 	// 장바구니 추가
 	@Override
@@ -36,8 +41,15 @@ public class CartServiceImpl implements CartService {
 		
 		for(CartDTO dto : cart) {
 			dto.initSaleTotal();
+			 
+			// 이미지 정보 얻기
+			int bookId = dto.getBookId();
 			
-			//이미지 정보 얻는 코드 추가 
+			List<AttachImageVO> imageList = attachMapper.getAttachList(bookId);
+			
+			dto.setImageList(imageList);
+
+			
 		}
 		
 		return cart;
