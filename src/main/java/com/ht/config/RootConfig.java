@@ -8,12 +8,12 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
+@EnableScheduling
 @Configuration
 @ComponentScan(basePackages = {"com.ht.*"})
 @MapperScan(basePackages = {"com.ht.mapper"})
@@ -39,5 +39,9 @@ public class RootConfig {
 	    return (SqlSessionFactory) sqlSessionFactory.getObject();
 	  }
 
+	  @Bean
+	  public DataSourceTransactionManager txManager() {
+		  return new DataSourceTransactionManager(dataSource());
+	  }
 	}
 

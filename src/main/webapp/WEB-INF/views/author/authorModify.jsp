@@ -83,6 +83,7 @@
 				<div class="btn_section">
 					<button id="cancelBtn" class="btn">취소</button>
 					<button id="modifyBtn" class="btn modify_btn">수 정</button>
+					<button id="deleteBtn" class="btn delete_btn">삭 제</button>
 				</div>
 			</form>
 		</div>
@@ -110,6 +111,16 @@ $("#cancelBtn").on("click", function(e){
 	moveForm.submit();
 });
 
+/* 삭제 버튼 */
+$("#deleteBtn").on("click", function(e){
+	e.preventDefault();
+	moveForm.find("input").remove();
+	moveForm.append('<input type="hidden" name="authorId" value="${authorInfo.authorId}">');
+	moveForm.attr("action", "/author/authorDelete");
+	moveForm.attr("method", "post");
+	moveForm.submit();
+});
+
 // 작가 수정 버튼 작동 및 유효성 검사
 $("#modifyBtn").on("click", function(e){
 	let authorName = $(".form_section_content input[name='authorName']");
@@ -121,7 +132,7 @@ $("#modifyBtn").on("click", function(e){
 	e.preventDefault();
 	
 	if(!authorName){
-		$("#warn_authorName").css("display"."block");
+		$("#warn_authorName").css("display","block");
 	}else{
 		$("#warn_authorName").css("display","none");
 		nameCk = true;
