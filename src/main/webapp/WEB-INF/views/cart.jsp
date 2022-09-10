@@ -86,6 +86,7 @@
 		    
 		});
 		
+
 		// 주문 페이지 이동
 		$(".order_btn").on("click", function(){
 			let fromContents ='';
@@ -108,6 +109,24 @@
 			$(".order_form").html(fromContents);
 			console.log(fromContents);
 			$(".order_form").submit();
+
+		// i = 몇 번재 객체인지 순서 값 (배열의 index라 생각)
+		// obj = i번째에서 접근하는 객체
+		$(".image_wrap").each(function(i,obj){
+			const bobj = $(obj);
+			
+			if(bobj.data("bookid")){
+				const uploadPath = bobj.data("path");
+				const uuid = bobj.data("uuid");
+				const fileName = bobj.data("filename")
+				
+				const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
+				
+				$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
+				
+			} else {
+				$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
+			}
 		});
 		
 	});
@@ -310,7 +329,11 @@
 									<input type="hidden" class="individual_bookId_input" value="${ci.bookId}">
 									
 								</td>
-								<td class="td_width_2"></td>
+								<td class="td_width_2">
+									<div class="image_wrap" data-bookid="${ci.imageList[0].bookId }" data-path ="${ci.imageList[0].uploadPath}" data-uuid="${ci.imageList[0].uuid}" data-filename="${ci.imageList[0].fileName}" >
+										<img>
+									</div>
+								</td>
 								<td class="td_width_3">${ci.bookName}</td>
 								<td class="td_width_4 price_td">
 									<del>정가 : <fmt:formatNumber value="${ci.bookPrice}" pattern="#,### 원" /></del><br>
