@@ -1,6 +1,7 @@
 package com.ht.order.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ht.member.domain.MemberVO;
 import com.ht.member.service.MemberService;
 import com.ht.order.domain.OrderDTO;
 import com.ht.order.domain.OrderPageDTO;
@@ -41,6 +43,22 @@ public class OrderController {
 		
 		log.info(od);
 		
+		orderService.order(od);
+		
+		MemberVO member = new MemberVO();
+		member.setMember_id(od.getMember_id());
+		
+		HttpSession session = request.getSession();
+		
+		try {
+			MemberVO memberLogin = memberService.memberLogin(member);
+			memberLogin.setMember_pw("");
+			session.setAttribute("member", memberLogin);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 		return "redirect:/main";
 	}
 }

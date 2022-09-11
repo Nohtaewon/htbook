@@ -262,7 +262,7 @@ function setTotalInfo(){
 	$(".totalPoint_span").text(totalPoint.toLocaleString());			// 총 마일리지
 	$(".delivery_price_span").text(deliveryPrice.toLocaleString()); 	// 총 배송비
 	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격
-	$(".usePoint_span").text(usePoint.toLocaleString());				// 힐인가(사용 포인트)
+	$(".usePoint_span").text(usePoint.toLocaleString());				// 할인가(사용 포인트)
 }
 
 
@@ -392,8 +392,6 @@ function setTotalInfo(){
 								<input type="hidden" class="individual_point_input" value="${ol.point }">
 								<input type="hidden" class="individual_totalPoint_input" value="${ol.total_point}">
 								<input type="hidden" class="individual_bookId_input" value="${ol.bookId }">
-								
-
 							</td>
 						</tr>
 					</c:forEach>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,15 +98,15 @@ $(document).ready(function(){
 				<span><a href="/member/join">회원가입</a></span>
 			</c:if>
 	
-			<!-- 로그인 한 상태 -->
-			<c:if test = "${member != null }">
-				<div class="login_success_area">
-					<span>회원 : ${member.member_name}</span>
-					<span>충전금액 : ${member.money}</span>
-					<span>포인트 : ${member.point}</span>
-					<a href="/member/logout">로그아웃</a>
-				</div>
-			</c:if>
+			<!-- 로그인한 상태 -->
+				<c:if test="${ member != null }">
+					<div class="login_success_area">
+						<span>회원 : ${member.member_name}</span>
+						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
+						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
+						<a href="/member/logout.do">로그아웃</a>
+					</div>
+				</c:if>
 		</div>
 		<div class="clearfix"></div>
 		</div>

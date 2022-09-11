@@ -17,7 +17,7 @@ public class OrderItemDTO {
 	@Getter @Setter
     private int bookPrice;
 	@Getter @Setter
-    private double bookDiscount;
+    private double bookDiscount; 
 	@Getter @Setter
     private int save_point;
     

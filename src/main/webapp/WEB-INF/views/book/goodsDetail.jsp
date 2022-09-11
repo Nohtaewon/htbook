@@ -22,11 +22,7 @@
 </style>
 </head>
 <body>
-	<!--  주문 form -->
-	<form action="/order/${member.member_id }" method="get" class="order_from">
-		<input type="hidden" name="order[0].bookId" value="${goodsInsfo.bookId }">
-		<input type="hidden" name="order[0].bookCount" value="">	
-	</form>
+	
 	
 	<%@include file="../common/header.jsp"%>
 	<div class="admin_content_wrap">
@@ -353,12 +349,6 @@ $("#modifyBtn").on("click", function(e){
 	$("#moveForm").submit();
 });
 
-// 바로구매 버튼
-$(".btn_buy").on("click", function(){
-	let bookCount = $(".quantity_unput").val();
-	$(".order_from").find("input[name='orders[0].bookCount']").val(bookCount);
-	$(".order_from").submit();
-});
 
 
 </script>

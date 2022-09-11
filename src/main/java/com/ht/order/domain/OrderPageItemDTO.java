@@ -23,7 +23,7 @@ public class OrderPageItemDTO {
 	@Getter@Setter
 	private int bookPrice;
 	@Getter@Setter
-	private int bookDiscount;
+	private double bookDiscount;
 	
 	// 만들어 놓을 값
 	@Getter@Setter
@@ -40,7 +40,7 @@ public class OrderPageItemDTO {
 	private List<AttachImageVO> imageList;
 	
 	public void initSaleTotal() {
-		this.sale_price = (int) (this.bookPrice * (1-this.bookDiscount));
+		this.sale_price = (int)(this.bookPrice * (1-this.bookDiscount));
 		this.total_price = this.sale_price*this.book_count;
 		this.point = (int)(Math.floor(this.sale_price*0.05));
 		this.total_point =this.point * this.book_count;

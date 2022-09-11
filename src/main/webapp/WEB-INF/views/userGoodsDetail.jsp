@@ -13,7 +13,12 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-
+	<!-- 주문 form -->
+	<form action="/order/${member.member_id}" method="get" class="order_form">
+		<input type="hidden" name="orders[0].bookId" value="${goodsInfo.bookId}">
+		<input type="hidden" name="orders[0].book_count" value="">
+	</form>
+	
 	<div class="wrapper">
 		<div class="wrap">
 			<div class="top_gnb_area">
@@ -260,12 +265,19 @@ $(document).ready(function(){
 	
 	$(".publeyear").html(publeYear);
 	
-	/* 포인트 삽입 */
+	// 포인트 삽입
 	let salePrice = "${goodsInfo.bookPrice - (goodsInfo.bookPrice*goodsInfo.bookDiscount)}"
 	let point = salePrice*0.05;
 	point = Math.floor(point);
 	$(".point_span").text(point);
 	
+
+	// 바로구매 버튼
+	$(".btn_buy").on("click", function(){
+		let bookCount = $(".quantity_input").val();
+		$(".order_form").find("input[name='orders[0].book_count']").val(bookCount);
+		$(".order_form").submit();
+	});
 
 	
 });	

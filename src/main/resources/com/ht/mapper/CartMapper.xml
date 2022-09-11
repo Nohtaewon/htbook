@@ -32,4 +32,9 @@
 		select * from cart
 		where member_id = #{member_id} and bookId = #{bookId}
 	</select>
+	
+	<!-- 카트 삭제(주문) -->
+	<delete id="deleteOrderCart">
+		delete from cart where member_id = #{member_id} and bookId = #{bookId}
+	</delete>
  </mapper>
