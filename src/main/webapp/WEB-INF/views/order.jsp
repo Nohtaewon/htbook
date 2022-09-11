@@ -14,6 +14,10 @@
 <script>
 $(document).ready(function(){
 	
+	// 주문정보 최신화
+	setTotalInfo();
+	
+	
 	// 로그아웃 버튼 작동
 	$("#gnb_logout_button").click(function(){
 		//alert("버튼 작동");
@@ -27,6 +31,72 @@ $(document).ready(function(){
 			}
 		});
 	});	
+	
+	// 포인트 입력
+	// 0 이상 & 최대 포인트 수 이하
+	$(".order_point_input").on("propertychange change keyup paste input", function(){
+		
+		// 문자열 인식 오류 paseInt() 메소드 사용
+		const maxPoint = parseInt('${memberInfo.point}');
+		
+		let inputValue = parseInt($(this).val());
+		
+		if(inputValue < 0){
+			$(this).val(0); //0 보다 작은값(음수) 입력시 0
+		} else if (inputValue > maxPoint){
+			$(this).val(maxPoint); // 가진 포인트보다 더큰 포인트 입력시 가진포인트 전부 입력
+		}
+		
+		// 주문 정보 최신화
+		setTotalInfo();
+	});
+	
+	// 포인트 모두사용 or 취소 버튼
+	// N: 모두 사용 상태 , Y : 모두 취소 상태
+	$(".order_point_input_btn").on("click",function(){
+		
+		const maxPoint = parseInt('${memberInfo.point}');
+		
+		let state = $(this).data("state"); // data-state 속성 값
+		
+		if(state == 'N'){
+			//모두 사용
+			//console.log("N")
+			$(".order_point_input").val(maxPoint); //값 변경
+			
+			$(".order_point_input_btn_Y").css("display", "inline-block");
+			$(".order_point_input_btn_N").css("display", "none");
+		} else if (state == 'Y'){
+			// 모두 취소
+			//console.log("Y")
+			$(".order_point_input").val(0); //값 변경
+			
+			$(".order_point_input_btn_Y").css("display", "none");
+			$(".order_point_input_btn_N").css("display", "inline-block");
+		}		
+		
+		// 주문 정보 최신화
+		setTotalInfo();
+	});
+	
+	// 이미지 삽입
+	$(".image_wrap").each(function(i, obj){
+		
+		const bobj = $(obj);
+		
+		if(bobj.data("bookid")){
+			const uploadPath = bobj.data("path");
+			const uuid = bobj.data("uuid");
+			const fileName = bobj.data("filename");
+			
+			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
+			
+			$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
+		} else {
+			$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
+		}
+		
+	});
 		
 		
 	
@@ -108,6 +178,53 @@ function execution_daum_address(){
 	
 }
 
+//총 주문 정보 세팅
+function setTotalInfo(){
+	
+	let totalPrice = 0;				// 총 가격
+	let totalCount = 0;				// 총 갯수
+	let totalKind = 0;				// 총 종류
+	let totalPoint = 0;				// 총 마일리지
+	let deliveryPrice = 0;			// 배송비
+	let usePoint = 0;				// 사용 포인트(할인가격)
+	let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)
+	
+	$(".goods_table_price_td").each(function(index,element){
+		
+		totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
+		totalCount += parseInt($(element).find(".individual_bookCount_input").val());
+		totalKind += 1;
+		
+		totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
+		
+	});
+	
+	// 배송비 결정
+	if(totalPrice >= 30000){
+		deliveryPrice = 0;
+		
+	} else if(totalPrice == 0){
+		deliveryPrice = 0;
+	} else {
+		deliveryPrice = 3000;
+	}
+	
+	finalTotalPrice = totalPrice + deliveryPrice;
+	
+	// 사용포인트 계산		
+	usePoint = $(".order_point_input").val();
+	finalTotalPrice = totalPrice - usePoint;
+	
+	//값 넣기
+	$(".totalPrice_span").text(totalPrice.toLocaleString());			// 총 가격
+	$(".goods_kind_div_count").text(totalCount);						// 총 갯수
+	$(".goods_kind_div_kind").text(totalKind);							// 총 종류
+	$(".totalPoint_span").text(totalPoint.toLocaleString());			// 총 마일리지
+	$(".delivery_price_span").text(deliveryPrice.toLocaleString()); 	// 총 배송비
+	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());	// 최종 가격
+	$(".usePoint_span").text(usePoint.toLocaleString());				// 힐인가(사용 포인트)
+}
+
 </script>
 </head>
 <body>
@@ -143,24 +260,11 @@ function execution_daum_address(){
 				</li>			
 			</ul>			
 		</div>
+		
 		<div class="top_area">
 			<!-- 로고영역 -->
 			<div class="logo_area">
 				<a href="/main"><img src="/resources/img/mLogo.png"></a>
-			</div>
-			<div class="search_area">
-                	<div class="search_wrap">
-                		<form id="searchForm" action="/search" method="get">
-                			<div class="search_input">
-                				<select name="type">
-                					<option value="T">책 제목</option>
-                					<option value="A">작가</option>
-                				</select>
-                				<input type="text" name="keyword" value="<c:out value="${pageMaker.cri.keyword}"/>">
-                    			<button class='btn search_btn'>검 색</button>                				
-                			</div>
-                		</form>
-                	</div>
 			</div>
 			<div class="login_area">
 			
@@ -183,11 +287,125 @@ function execution_daum_address(){
 			</div>
 			<div class="clearfix"></div>			
 		</div>
-		<div class="content_area">
-				
-				<div class="content_subject"><span>장바구니</span></div>
+		
+		<div class="orderGoods_div">
+			<!-- 상품 종류 -->
+			<div class="goods_kind_div">
+				주문상품 <span class="goods_kind_div_kind"></span>종 <span class="goods_kind_div_count"></span>개
+			</div>
+			<!-- 상품 테이블 -->
+			<table class="goods_subject_table">
+				<colgroup>
+					<col width="15%">
+					<col width="45%">
+					<col width="40%">		
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>이미지</th>
+						<th>상품 정보</th>
+						<th>판매가</th>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table class="goods_table">
+				<colgroup>
+					<col width="15%">
+					<col width="45%">
+					<col width="40%">
+				</colgroup>
+				<tbody>
+					<c:forEach items="${orderList}" var="ol">
+						<tr>
+							<td>
+								<div class="image_wrap" data-bookid="${ol.imageList[0].bookId}" data-path="${ol.imageList[0].uploadPath}" data-uuid="${ol.imageList[0].uuid}" data-filename="${ol.imageList[0].fileName}">
+									<img>
+								</div>
+							</td>
+							
+							<td>${ol.bookName}</td>
+							<td class="goods_table_price_td">
+								<fmt:formatNumber value="${ol.sale_price}" pattern="#,### 원"/> | 수량 ${ol.book_count}개
+								<br><fmt:formatNumber value="${ol.total_price}" pattern="#,### 원" />
+								<br>[<fmt:formatNumber value="${ol.total_point}" pattern="#,### 원" />P]
+								<input type="hidden" class="individual_bookPrice_input" value="${ol.bookPrice }">
+								<input type="hidden" class="individual_salePrice_input" value="${ol.sale_price }">
+								<input type="hidden" class="individual_bookCount_input" value="${ol.book_count }">
+								<input type="hidden" class="individual_totalPrice_input" value="${ol.total_price }">
+								<input type="hidden" class="individual_point_input" value="${ol.point }">
+								<input type="hidden" class="individual_totalPoint_input" value="${ol.total_point}">
+								<input type="hidden" class="individual_bookId_input" value="${ol.bookId }">
+								
 
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="point_div">
+			<div class="point_div_subject">포인트 사용</div>
+			<table class="point_table">
+				<colgroup>
+					<col width="25%">
+					<col width="*">
+				</colgroup>
 				
+				<tbody>
+					<tr>
+						<th>포인트 사용</th>
+						<td>
+							${memberInfo.point} | <input class="order_point_input" value="0">원
+							<a class="order_point_input_btn order_point_input_btn_N" data-state="N">모두사용</a>
+							<a class="order_point_input_btn order_point_input_btn_Y" data-state="Y" style="display: none;">사용 취소</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="total_info_div">
+			<!-- 가격 종합 정보 -->
+			<div class="total_info_price_div">
+				<ul>
+					<li>
+						<span class="price_span_label">상품 금액</span>
+						<span class="totalPrice_span">100000</span>원
+					</li>
+					<li>
+						<span class="price_span_label">배송비</span>
+						<span class="delivery_price_span">100000</span>원
+					</li>
+					<li>
+						<span class="price_span_label">할인금액</span>
+						<span class="usePoint_span">100000</span>원
+					</li>
+					<li class="price_total_li">
+						<strong class="price_span_label total_price_label">최종 결제 금액</strong>
+						<strong class="strong_red">
+							<span class="total_price_red finalTotalPrice_span">
+								1500000
+							</span>원
+						</strong>
+					</li>
+					
+					<li class="point_li">
+						<span class="price_span_label">적립예정 포인트</span>
+						<span class="totalPoint_span">7960원</span>
+					</li>
+				</ul>
+			</div>
+			
+			<!-- 버튼 영역 -->
+			<div class="total_info_btn_div">
+				<a class="order_btn">결제하기</a>
+			</div> 
+			
+		</div>
+		
+		<div class="content_area">
 				<div class="content_main">
 					<!-- 회원 정보 -->
 					<div class ="member_info_div">

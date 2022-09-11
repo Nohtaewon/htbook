@@ -1,5 +1,9 @@
 package com.ht.order.domain;
 
+import java.util.List;
+
+import com.ht.book.domain.AttachImageVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,6 +34,10 @@ public class OrderPageItemDTO {
 	private int point; // 한개의 상품 구매로 받을 수 있는 포인트
 	@Getter@Setter
 	private int total_point; // 총 포인트
+	
+	//상품 이미지
+	@Getter@Setter
+	private List<AttachImageVO> imageList;
 	
 	public void initSaleTotal() {
 		this.sale_price = (int) (this.bookPrice * (1-this.bookDiscount));
