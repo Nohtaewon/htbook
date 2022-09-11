@@ -28,7 +28,7 @@
 					</li>
 				</c:if>
 				<c:if test="${member != null }">	<!-- 로그인 o -->		
-					<c:if test="${member.adminCk == 1 }">	<!-- 관리자 계정 -->
+					<c:if test="${member.admin_ck == 1 }">	<!-- 관리자 계정 -->
 						<li><a href="/admin/main">관리자 페이지</a></li>
 					</c:if>							
 					<li>
@@ -38,7 +38,7 @@
 						마이룸
 					</li>
 					<li>
-						장바구니
+						<a href="/cart/${member.member_id}">장바구니</a>
 					</li>
 				</c:if>				
 				<li>
@@ -76,7 +76,7 @@
 				<!-- 로그인한 상태 -->
 				<c:if test="${ member != null }">
 					<div class="login_success_area">
-						<span>회원 : ${member.memberName}</span>
+						<span>회원 : ${member.member_name}</span>
 						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
 						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
 						<a href="/member/logout">로그아웃</a>
@@ -124,7 +124,7 @@
 							<col width="120">
 							<col width="120">
 						</colgroup>
-						<tbody id="searchList>">
+						<tbody id="searchList">
 							<c:forEach items="${list}" var="list">
 								<tr>
 									<td class="image">
@@ -349,6 +349,7 @@
 		$("#filter_form input[name='type']").val(type);
 		$("#filter_form").submit();
 	});
+	
 </script>
 
 </body>
