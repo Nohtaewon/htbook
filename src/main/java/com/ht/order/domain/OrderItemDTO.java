@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 public class OrderItemDTO {
 	@Getter @Setter
-	private String orderId;
+	private String order_id;
 	@Getter @Setter
     private int bookId;
 	@Getter @Setter

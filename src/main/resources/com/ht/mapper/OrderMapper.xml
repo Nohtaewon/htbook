@@ -4,11 +4,43 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.ht.mapper.OrderMapper">
 
-	<!-- 주문 상품 정보 -->
+	<!-- 주문 상품 정보(페이지) -->
 	<select id="getGoodsInfo" resultType="com.ht.order.domain.OrderPageItemDTO">
 		select bookId, bookName, bookPrice, bookDiscount 
 		from book where bookId = #{bookId}
 	</select>
 	
+	<!-- 주문 상품 정보(주문) -->
+	<select id="getOrderInfo" resultType="com.ht.order.domain.OrderItemDTO">		
+		select bookId, bookPrice,bookDiscount
+		from book where bookId = #{bookId} 		
+	</select>
+	
+	<!-- 주문 테이블 등록 -->
+	<insert id="enrollOrder">
+		 insert into "ORDER"(order_id, addressee, member_id, member_addr1, member_addr2, member_addr3, order_state, delivery_cost, use_point )
+		 values (#{order_id},#{addressee}, #{member_id}, #{member_addr1}, #{member_addr2}, #{member_addr3}, '배송준비', #{delivery_cost}, #{use_point})
+	</insert>
+	
+	<!-- 주문 아이템 테이블 등록 -->
+	<insert id="enrollOrderItem">
+		insert into orderItem(order_item_id,order_id, bookId, book_count, bookPrice, bookDiscount, save_point)
+		values(orderItemSeq.nextval,#{order_id}, #{bookId}, #{book_count}, #{bookPrice}, #{bookDiscount}, #{save_point})
+	</insert>
+	
+	<!-- 주문 금액 차감 -->
+	<update id="deductMoney">
+		update book_member set money = #{money}, point = #{point} where member_id = #{member_id}	
+	</update>
+	
+	<!-- 주문 재고 차감 -->
+	<update id="deductStock">	
+		update book set bookStock = #{bookStock} where bookId = #{bookId}
+	</update>
+	
+	<!-- 카트 제거 -->
+	<delete id="deleteOrderCart">
+		delete from cart where member_id = #{member_id} and bookId = #{bookId}	
+	</delete>
 	
  </mapper>
