@@ -97,6 +97,38 @@ $(document).ready(function(){
 		}
 		
 	});
+	
+	// 주문요청
+	$(".order_btn").on("click", function(){
+		
+		// 주소 정보 & 받는이
+		$(".addressInfo_input_div").each(function(i,obj){
+			if($(obj).find(".selectAddress").val() === 'T'){
+				$("input[name='addressee']").val($(obj).find(".addressee_input").val());
+				$("input[name='member_addr1']").val($(obj).find(".address1_input").val());
+				$("input[name='member_addr2']").val($(obj).find(".address2_input").val());
+				$("input[name='member_addr3']").val($(obj).find(".address3_input").val());
+			}
+			
+		});
+		// 사용 포인트
+		$("input[name='use_point']").val($(".order_point_input").val());
+		
+		//상품정보
+		let form_contents = ''; 
+		$(".goods_table_price_td").each(function(index, element){
+			let bookId = $(element).find(".individual_bookId_input").val();
+			let bookCount = $(element).find(".individual_bookCount_input").val();
+			let bookId_input = "<input name='orders[" + index + "].bookId' type='hidden' value='" + bookId + "'>";
+			form_contents += bookId_input;
+			let bookCount_input = "<input name='orders[" + index + "].book_count' type='hidden' value='" + bookCount + "'>";
+			form_contents += bookCount_input;
+		});	
+		$(".order_form").append(form_contents);	
+		
+		//서버전송
+		$(".order_form").submit();
+	});
 		
 		
 	
@@ -120,11 +152,19 @@ function showAdress(className){
 		
 		// 지정 색상 변경
 		$(".address_btn_"+className).css('backgroundColor', '#3c3838');
+		
+		// 사용자 정보 주소록 T , 직접입력 F
+		// 직접입력 F
+			$(".addressInfo_input_div").each(function(i, obj){
+				$(obj).find(".selectAddress").val("F");
+			});
+		// 사용자 정보 주소록 T
+			$(".addressInfo_input_div_" + className).find(".selectAddress").val("T");
 }
 
-/* 다음 주소 연동 */
+// 다음 주소 API
 function execution_daum_address(){
- 		console.log("동작");
+ 		//console.log("동작");
 	   new daum.Postcode({
 	        oncomplete: function(data) {
 	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
@@ -225,9 +265,25 @@ function setTotalInfo(){
 	$(".usePoint_span").text(usePoint.toLocaleString());				// 힐인가(사용 포인트)
 }
 
+
+
 </script>
 </head>
 <body>
+
+<!-- 주문 요청 form -->
+<form class="order_form" action="/order" method="post">
+	<!-- 주문자 회원번호 -->
+	<input name="member_id" value="${memberInfo.member_id}" type="hidden">
+	<!-- 주소록 & 받는이 -->
+	<input name="addressee" type="hidden">
+	<input name="member_addr1" type="hidden">
+	<input name="member_addr2" type="hidden">
+	<input name="member_addr3" type="hidden">
+	<!-- 사용 포인트 -->
+	<input name="use_point" type="hidden">
+	<!-- 상품 정보 -->
+</form>
 
 <div class="wrapper">
 	<div class="wrap">
@@ -445,6 +501,11 @@ function setTotalInfo(){
 											<th>주소</th>
 											<td>
 												${memberInfo.member_addr1} ${memberInfo.member_addr2} <br> ${memberInfo.member_addr3}
+												<input class="selectAddress" value="T" type="hidden">
+												<input class="addressee_input" value="${memberInfo.member_name}" type="hidden">
+												<input class="address1_input" type="hidden" value="${memberInfo.member_addr1}">
+												<input class="address2_input" type="hidden" value="${memberInfo.member_addr2}">
+												<input class="address3_input" type="hidden" value="${memberInfo.member_addr3}">
 											</td>
 										</tr>
 									</tbody>
@@ -468,6 +529,7 @@ function setTotalInfo(){
 										<tr>
 											<th>주소</th>
 											<td>
+												<input class="selectAddress" value="F" type="hidden">
 												<input class="address1_input" readonly="readonly"> <a class="address_search_btn" onclick="execution_daum_address()">주소 찾기</a><br>
 												<input class="address2_input" readonly="readonly"><br>
 												<input class="address3_input" readonly="readonly">

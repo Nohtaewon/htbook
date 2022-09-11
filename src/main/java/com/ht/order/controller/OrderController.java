@@ -1,12 +1,16 @@
 package com.ht.order.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ht.member.service.MemberService;
+import com.ht.order.domain.OrderDTO;
 import com.ht.order.domain.OrderPageDTO;
 import com.ht.order.service.OrderService;
 
@@ -30,5 +34,13 @@ public class OrderController {
 		model.addAttribute("memberInfo", memberService.getMemberInfo(member_id));
 		
 		return "/order";
+	}
+	
+	@PostMapping("/order")
+	public String orderPagePost(OrderDTO od, HttpServletRequest request) {
+		
+		log.info(od);
+		
+		return "redirect:/main";
 	}
 }
