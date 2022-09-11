@@ -25,7 +25,7 @@
 					</c:if>
 					<c:if test="${member != null }">
 						<!-- 로그인 o -->
-						<c:if test="${member.adminCk == 1 }">
+						<c:if test="${member.admin_ck == 1 }">
 							<!-- 관리자 계정 -->
 							<li><a href="/admin/main">관리자 페이지</a></li>
 						</c:if>
@@ -68,7 +68,7 @@
 					<!-- 로그인한 상태 -->
 					<c:if test="${ member != null }">
 						<div class="login_success_area">
-							<span>회원 : ${member.memberName}</span> <span>충전금액 : <fmt:formatNumber
+							<span>회원 : ${member.member_name}</span> <span>충전금액 : <fmt:formatNumber
 									value="${member.money }" pattern="\#,###.##" /></span> <span>포인트
 								: <fmt:formatNumber value="${member.point }" pattern="#,###" />
 							</span> <a href="/member/logout">로그아웃</a>
