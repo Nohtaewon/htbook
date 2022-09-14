@@ -92,6 +92,8 @@
 	    <if test="keyword != null">
 	    	where member_id like '%'||#{keyword}||'%'
 	    </if>
+	    
+	    
 	
 	</select>
 	

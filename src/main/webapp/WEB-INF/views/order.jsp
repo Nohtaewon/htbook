@@ -91,7 +91,7 @@ $(document).ready(function(){
 			
 			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
 			
-			$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
+			$(this).find("img").attr('src', '/book/display?fileName=' + fileCallPath);
 		} else {
 			$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
 		}
@@ -100,7 +100,7 @@ $(document).ready(function(){
 	
 	// 주문요청
 	$(".order_btn").on("click", function(){
-		
+		console.log("test")
 		// 주소 정보 & 받는이
 		$(".addressInfo_input_div").each(function(i,obj){
 			if($(obj).find(".selectAddress").val() === 'T'){
@@ -125,6 +125,9 @@ $(document).ready(function(){
 			form_contents += bookCount_input;
 		});	
 		$(".order_form").append(form_contents);	
+		
+		
+		console.log(form_contents)
 		
 		//서버전송
 		$(".order_form").submit();
@@ -157,6 +160,7 @@ function showAdress(className){
 		// 직접입력 F
 			$(".addressInfo_input_div").each(function(i, obj){
 				$(obj).find(".selectAddress").val("F");
+				console.log($(obj).find(".selectAddress").val("F"))
 			});
 		// 사용자 정보 주소록 T
 			$(".addressInfo_input_div_" + className).find(".selectAddress").val("T");
@@ -330,7 +334,7 @@ function setTotalInfo(){
 						<span>회원 : ${member.member_name}</span>
 						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
 						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-						<a href="/member/logout.do">로그아웃</a>
+						
 					</div>
 				</c:if>
 				
@@ -448,7 +452,7 @@ function setTotalInfo(){
 			
 			<!-- 버튼 영역 -->
 			<div class="total_info_btn_div">
-				<a class="order_btn">결제하기</a>
+			<button class="order_btn">결제하기</button>
 			</div> 
 			
 		</div>
@@ -514,7 +518,7 @@ function setTotalInfo(){
 										<tr>
 											<th>이름</th>
 											<td>
-												<input class="address_input">
+												<input class="addressee_input">
 											</td>
 										</tr>
 										

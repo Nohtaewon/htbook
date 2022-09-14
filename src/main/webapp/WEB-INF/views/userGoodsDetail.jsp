@@ -74,7 +74,6 @@
 							<span>회원 : ${member.member_name}</span> <span>충전금액 : <fmt:formatNumber
 									value="${member.money }" pattern="\#,###.##" /></span> <span>포인트
 								: <fmt:formatNumber value="${member.point }" pattern="#,###" />
-							</span> <a href="/member/logout">로그아웃</a>
 						</div>
 					</c:if>
 
