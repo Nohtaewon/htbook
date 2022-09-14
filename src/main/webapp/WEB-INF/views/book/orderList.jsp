@@ -12,6 +12,14 @@
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
+
+	<form id="deleteForm" action="/book/orderCancle" method="post">
+         <input type="hidden" name="order_id">
+		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+		<input type="hidden" name="member_id" value="${member.member_id}">
+    </form>
 	<div class="admin_content_wrap">
 		<div class="admin_content_subject">
 			<span>주문 현황</span>
@@ -43,6 +51,9 @@
 	                    			<td><fmt:formatDate value="${list.order_date}" pattern="yyyy-MM-dd"/></td>
 	                    			<td><c:out value="${list.order_state}"/></td>
 	                    			<td>
+	                    				<c:if test="${list.order_state == '배송준비' }">
+											<button class="delete_btn" data-order_id="${list.order_id}">취소</button>
+										</c:if>
 	                    			</td>
 	                    		</tr>
 	                    		</c:forEach>
@@ -56,7 +67,7 @@
 
 		<!-- 검색 영역 -->
 		<div class="search_wrap">
-			<form action="/admin/orderList" method="get" id=:searchForm>
+			<form action="/book/orderList" method="get" id=:searchForm>
 				<div class="search_input">
 					<input type="text" name="keyword"
 						value='<c:out value="${pageMaker.cri.keyword}"></c:out>'>
@@ -139,6 +150,15 @@
 			
 		});
 		
+	});
+	
+	$(".delete_btn").on("click", function(e){
+		e.preventDefault();
+		
+		let id = $(this).data("order_id");
+		
+		$("#deleteForm").find("input[name='order_id']").val(id);
+		$("#deleteForm").submit();
 	});
 </script>
 </html>

@@ -112,18 +112,5 @@ public class BookServiceImpl implements BookService{
 		return bookMapper.getAttachInfo(bookId);
 	}
 	
-	// 주문 상품 리스트
-	@Override
-	public List<OrderDTO> getOrderList(Criteria cri) {
-		
-		return bookMapper.getOrderList(cri);
-	}
-	
-	// 주문 총 갯수
-	@Override
-	public int getOrderTotal(Criteria cri) {
-		
-		return bookMapper.getOrderTotal(cri);
-	}
 
 }

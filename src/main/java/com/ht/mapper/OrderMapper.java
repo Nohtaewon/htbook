@@ -1,7 +1,10 @@
 package com.ht.mapper;
 
+import java.util.List;
+
 import com.ht.book.domain.BookVO;
 import com.ht.cart.domain.CartDTO;
+import com.ht.common.Criteria;
 import com.ht.member.domain.MemberVO;
 import com.ht.order.domain.OrderDTO;
 import com.ht.order.domain.OrderItemDTO;
@@ -29,5 +32,20 @@ public interface OrderMapper {
 	
 	// 카트 제거(주문)
 	public int deleteOrderCart(CartDTO dto);
+	
+	// 주문 취소
+	public int orderCancle(String orderId);
+	
+	// 주문 상품 OrderItem 정보(주문취소)
+	public List<OrderItemDTO> getOrderItemInfo(String orderId);
+	
+	// 주문 ORDER 정보(주문취소)
+	public OrderDTO getOrder(String orderId);
+	
+	// 주문 상품 리스트
+	public List<OrderDTO> getOrderList(Criteria cri);
+		
+	// 주문 총 갯수
+	public int getOrderTotal(Criteria cri);
 	
 }

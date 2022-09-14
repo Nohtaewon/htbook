@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.cart.domain.CartDTO;
+import com.ht.common.Criteria;
 import com.ht.mapper.AttachMapper;
 import com.ht.mapper.BookMapper;
 import com.ht.mapper.CartMapper;
@@ -19,6 +20,7 @@ import com.ht.mapper.MemberMapper;
 import com.ht.mapper.OrderMapper;
 import com.ht.mapper.SearchMapper;
 import com.ht.member.domain.MemberVO;
+import com.ht.order.domain.OrderCancelDTO;
 import com.ht.order.domain.OrderDTO;
 import com.ht.order.domain.OrderItemDTO;
 import com.ht.order.domain.OrderPageItemDTO;
@@ -84,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 			// 기본정보
 			orderItem.initSaleTotal();
 			
-			// List객체 츠가
+			// List객체 추가
 			ords.add(orderItem);
 						
 		}
@@ -142,6 +144,65 @@ public class OrderServiceImpl implements OrderService {
 			
 			cartMapper.deleteOrderCart(dto);
 		}
+	}
+	
+	// 주문 취소
+	@Override
+	@Transactional
+	public void orderCancle(OrderCancelDTO dto) {
+		// 회원
+		MemberVO member = memberMapper.getMemberInfo(dto.getMember_id());
+		
+		// 주문 상품
+		List<OrderItemDTO> ords = orderMapper.getOrderItemInfo(dto.getOrder_id());
+		for(OrderItemDTO ord : ords) {
+			ord.initSaleTotal();
+		}
+		
+		// 주문
+		OrderDTO orw = orderMapper.getOrder(dto.getOrder_id());
+		orw.setOrders(ords);
+		
+		orw.getOrderPriceInfo();
+		
+		// 주문 상품 취소
+		orderMapper.orderCancle(dto.getOrder_id());
+		
+		// 돈, 포인트 반환
+		
+			// 돈
+			int calMoney = member.getMoney();
+			calMoney += orw.getOrder_sale_price();
+			member.setMoney(calMoney);
+			
+			// 포인트
+			int calPoint = member.getPoint();
+			calPoint = calPoint + orw.getUse_point() - orw.getOrder_save_point();
+			member.setPoint(calPoint);
+			
+			// DB 적용
+			orderMapper.deductMoney(member);
+			
+			// 재고 반환, DB 적용
+			for(OrderItemDTO ord : orw.getOrders()) {
+				BookVO book = searchMapper.getGoodsInfo(ord.getBookId());
+				book.setBookStock(book.getBookStock() + ord.getBook_count());
+				orderMapper.deductStock(book);
+			}
+		
+		
+	}
+
+	@Override
+	public List<OrderDTO> getOrderList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return orderMapper.getOrderList(cri);
+	}
+
+	@Override
+	public int getOrderTotal(Criteria cri) {
+		// TODO Auto-generated method stub
+		return orderMapper.getOrderTotal(cri);
 	}
 
 }

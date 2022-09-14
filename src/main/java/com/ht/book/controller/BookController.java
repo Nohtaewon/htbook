@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +38,11 @@ import com.ht.book.domain.BookVO;
 import com.ht.book.service.BookService;
 import com.ht.common.Criteria;
 import com.ht.common.PageDTO;
+import com.ht.member.domain.MemberVO;
+import com.ht.member.service.MemberService;
+import com.ht.order.domain.OrderCancelDTO;
 import com.ht.order.domain.OrderDTO;
+import com.ht.order.service.OrderService;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -48,6 +54,12 @@ public class BookController {
 
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	// 이미지 파일 삭제
 	@PostMapping("/deleteFile")
@@ -320,15 +332,36 @@ public class BookController {
 	// 주문 현황 페이지
 	@GetMapping("/orderList")
 	public String orderListGET(Criteria cri, Model model) {
-		List<OrderDTO> list = bookService.getOrderList(cri);
+		List<OrderDTO> list = orderService.getOrderList(cri);
 		if(!list.isEmpty()) {
 			model.addAttribute("list", list);
-			model.addAttribute("pageMaker", new PageDTO(cri, bookService.getOrderTotal(cri)));
+			model.addAttribute("pageMaker", new PageDTO(cri, orderService.getOrderTotal(cri)));
 		} else {
 			model.addAttribute("listCheck", "empty");
 		}
 		
-		return "/admin/orderList";
+		return "/book/orderList";
 	}
+	
+	// 주문삭제
+		@PostMapping("/orderCancle")
+		public String orderCanclePOST(OrderCancelDTO dto,HttpServletRequest request) {
+			orderService.orderCancle(dto);
+			MemberVO member = new MemberVO();
+			member.setMember_id(dto.getMember_id());
+			
+			HttpSession session = request.getSession();
+			
+			try {
+				MemberVO memberLogin = memberService.memberLogin(member);
+				memberLogin.setMember_pw("");
+				session.setAttribute("member", memberLogin);
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			return "redirect:/book/orderList?keyword=" + dto.getKeyword() + "&amount=" + dto.getAmount() + "&pageNum=" + dto.getPageNum();
+		}
 
 }
