@@ -491,7 +491,7 @@ height: 110px;
 /* 주문 종합 정보 */
 .total_info_div{
 	position:absolute;
-	top: 200%;
+	top: 150%;
 	left: 10%;
 	right : 70%;
 	width : 600px;

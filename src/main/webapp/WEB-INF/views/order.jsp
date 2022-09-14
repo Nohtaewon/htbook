@@ -91,7 +91,7 @@ $(document).ready(function(){
 			
 			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
 			
-			$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
+			$(this).find("img").attr('src', '/book/display?fileName=' + fileCallPath);
 		} else {
 			$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
 		}
@@ -100,7 +100,7 @@ $(document).ready(function(){
 	
 	// 주문요청
 	$(".order_btn").on("click", function(){
-		
+		console.log("test")
 		// 주소 정보 & 받는이
 		$(".addressInfo_input_div").each(function(i,obj){
 			if($(obj).find(".selectAddress").val() === 'T'){
@@ -330,7 +330,7 @@ function setTotalInfo(){
 						<span>회원 : ${member.member_name}</span>
 						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
 						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-						<a href="/member/logout.do">로그아웃</a>
+						
 					</div>
 				</c:if>
 				

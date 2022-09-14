@@ -43,7 +43,7 @@ $(document).ready(function(){
 			
 			<div class="pw_wrap">
 				<div class="pw_input_box">
-					<input class="pw_input" name="member_pw">
+					<input class="pw_input" name="member_pw"  type="password">
 				</div>
 			</div>
 			<c:if test = "${result ==0}">

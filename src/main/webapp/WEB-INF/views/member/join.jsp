@@ -300,7 +300,7 @@ function mailFormCheck(email){
 				<div class="pw_wrap">
 					<div class="pw_name">비밀번호</div>
 					<div class="pw_input_box">
-						<input class="pw_input" name="member_pw">
+						<input class="pw_input" name="member_pw" type="password">
 					</div>
 					<span class="final_pw_ck" style="color : #be0000;">비밀번호를 입력해 주세요.</span>
 				</div>
@@ -308,7 +308,7 @@ function mailFormCheck(email){
 				<div class="pwck_wrap">
 					<div class="pwck_name">비밀번호 확인</div>
 					<div class="pwck_input_box">
-						<input class="pwck_input">
+						<input class="pwck_input"  type="password">
 					</div>
 					<sapn class="pw_input_box_warn" style="color : #be0000;"></sapn>
 					<span class="final_pwck_ck" style="color : #be0000;">입력하신 비밀번호를 확인해 주세요.</span>

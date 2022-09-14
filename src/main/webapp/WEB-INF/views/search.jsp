@@ -73,7 +73,6 @@
 						<span>회원 : ${member.member_name}</span>
 						<span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
 						<span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
-						<a href="/member/logout">로그아웃</a>
 					</div>
 				</c:if>
 				
@@ -285,6 +284,8 @@
 		const selectedType = '<c:out value="${pageMaker.cri.type}"/>';
 		if(selectedType != ""){
 			$("select[name='type']").val(selectedType).attr("selected", "selected");	
+		}else if(selectedType == ""){
+			
 		}
 		
 		/* 이미지 삽입 */
