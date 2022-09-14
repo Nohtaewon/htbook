@@ -7,8 +7,7 @@
             <div class="top_gnb_area">
                 <ul class="list">	
                     <li><a href="/main">메인 페이지</a></li>
-                    <li><a href="/member/logout">로그아웃</a></li>
-                    <li>고객센터</li>			
+                    <li><a href="/member/logout">로그아웃</a></li>		
                 </ul>
             </div>
             <!-- top_subject_area -->
@@ -33,9 +32,7 @@
 	                  <li>
 	                      <a class="admin_list_04" href="/author/authorManage">작가 관리</a>                            
 	                  </li>
-	                  <li>
-	                      <a class="admin_list_05">회원 관리</a>                            
-	                  </li>                
+              
 	                  <li>
 	                      <a class="admin_list_06" href="/book/orderList">주문 현황</a>                            
 	                  </li>	                                                                                               

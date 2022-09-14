@@ -28,6 +28,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,6 +61,12 @@ public class BookController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	// 관리자 메인 페이지 이동
+	@RequestMapping(value = "main", method = RequestMethod.GET)
+	public void adminMainGET() throws Exception {
+		log.info("관리자 페이지 이동");
+	}
 
 	// 이미지 파일 삭제
 	@PostMapping("/deleteFile")

@@ -299,21 +299,15 @@ function setTotalInfo(){
 				</c:if>
 				<c:if test="${member != null }">	<!-- 로그인 o -->		
 					<c:if test="${member.admin_ck == 1 }">	<!-- 관리자 계정 -->
-						<li><a href="/admin/main">관리자 페이지</a></li>
+						<li><a href="/book/main">관리자 페이지</a></li>
 					</c:if>							
 					<li>
 						<a id="gnb_logout_button">로그아웃</a>
 					</li>
 					<li>
-						마이룸
-					</li>
-					<li>
 						<a href="/cart/${member.member_id}">장바구니</a>
 					</li>
-				</c:if>				
-				<li>
-					고객센터
-				</li>			
+				</c:if>							
 			</ul>			
 		</div>
 		
