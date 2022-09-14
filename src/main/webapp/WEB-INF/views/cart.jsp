@@ -100,7 +100,7 @@ $(document).ready(function(){
 			
 			const fileCallPath = encodeURIComponent(uploadPath + "/s_" + uuid + "_" + fileName);
 			
-			$(this).find("img").attr('src', '/display?fileName=' + fileCallPath);
+			$(this).find("img").attr('src', '/book/display?fileName=' + fileCallPath);
 			
 		} else {
 			$(this).find("img").attr('src', '/resources/img/goodsNoImage.png');
