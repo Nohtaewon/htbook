@@ -126,6 +126,9 @@ $(document).ready(function(){
 		});	
 		$(".order_form").append(form_contents);	
 		
+		
+		console.log(form_contents)
+		
 		//서버전송
 		$(".order_form").submit();
 	});
@@ -157,6 +160,7 @@ function showAdress(className){
 		// 직접입력 F
 			$(".addressInfo_input_div").each(function(i, obj){
 				$(obj).find(".selectAddress").val("F");
+				console.log($(obj).find(".selectAddress").val("F"))
 			});
 		// 사용자 정보 주소록 T
 			$(".addressInfo_input_div_" + className).find(".selectAddress").val("T");
@@ -448,7 +452,7 @@ function setTotalInfo(){
 			
 			<!-- 버튼 영역 -->
 			<div class="total_info_btn_div">
-				<a class="order_btn">결제하기</a>
+			<button class="order_btn">결제하기</button>
 			</div> 
 			
 		</div>
@@ -514,7 +518,7 @@ function setTotalInfo(){
 										<tr>
 											<th>이름</th>
 											<td>
-												<input class="address_input">
+												<input class="addressee_input">
 											</td>
 										</tr>
 										

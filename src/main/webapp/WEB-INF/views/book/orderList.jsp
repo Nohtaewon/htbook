@@ -106,7 +106,7 @@
 			</ul>
 
 		</div>
-		<form id="moveForm" action="/admin/orderList" method="get">
+		<form id="moveForm" action="/book/orderList" method="get">
 			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
