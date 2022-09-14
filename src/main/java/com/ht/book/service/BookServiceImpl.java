@@ -11,6 +11,7 @@ import com.ht.book.domain.BookVO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
 import com.ht.mapper.BookMapper;
+import com.ht.order.domain.OrderDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -109,6 +110,20 @@ public class BookServiceImpl implements BookService{
 	public List<AttachImageVO> getAttachInfo(int bookId) {
 		
 		return bookMapper.getAttachInfo(bookId);
+	}
+	
+	// 주문 상품 리스트
+	@Override
+	public List<OrderDTO> getOrderList(Criteria cri) {
+		
+		return bookMapper.getOrderList(cri);
+	}
+	
+	// 주문 총 갯수
+	@Override
+	public int getOrderTotal(Criteria cri) {
+		
+		return bookMapper.getOrderTotal(cri);
 	}
 
 }

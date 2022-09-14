@@ -6,6 +6,7 @@ import com.ht.book.domain.AttachImageVO;
 import com.ht.book.domain.BookVO;
 import com.ht.book.domain.CateVO;
 import com.ht.common.Criteria;
+import com.ht.order.domain.OrderDTO;
 
 public interface BookMapper {
 	
@@ -41,5 +42,11 @@ public interface BookMapper {
 	
 	// 지정 상품 이미지 정보 얻기
 	public List<AttachImageVO> getAttachInfo(int bookId);
+	
+	// 주문 상품 리스트
+	public List<OrderDTO> getOrderList(Criteria cri);
+	
+	// 주문 총 갯수
+	public int getOrderTotal(Criteria cri);
 	
 }

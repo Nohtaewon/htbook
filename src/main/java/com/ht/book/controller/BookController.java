@@ -1,6 +1,5 @@
 package com.ht.book.controller;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +26,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,6 +36,7 @@ import com.ht.book.domain.BookVO;
 import com.ht.book.service.BookService;
 import com.ht.common.Criteria;
 import com.ht.common.PageDTO;
+import com.ht.order.domain.OrderDTO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -316,6 +315,20 @@ public class BookController {
 
 		return result;
 
+	}
+	
+	// 주문 현황 페이지
+	@GetMapping("/orderList")
+	public String orderListGET(Criteria cri, Model model) {
+		List<OrderDTO> list = bookService.getOrderList(cri);
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+			model.addAttribute("pageMaker", new PageDTO(cri, bookService.getOrderTotal(cri)));
+		} else {
+			model.addAttribute("listCheck", "empty");
+		}
+		
+		return "/admin/orderList";
 	}
 
 }
