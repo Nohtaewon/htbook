@@ -27,17 +27,17 @@
 	                  <li>
 	                      <a class="admin_list_02" href="/book/goodsManage">상품 관리</a>
 	                  </li>
-	                  <lI>
-	                      <a class="admin_list_03" href="/author/authorEnroll">작가 등록</a>                            
-	                  </lI>
-	                  <lI>
-	                      <a class="admin_list_04" href="/author/authorManage">작가 관리</a>                            
-	                  </lI>
-	                  <lI>
-	                      <a class="admin_list_05">회원 관리</a>                            
-	                  </lI>                
 	                  <li>
-	                      <a class="admin_list_06" href="#">주문 현황</a>                            
+	                      <a class="admin_list_03" href="/author/authorEnroll">작가 등록</a>                            
+	                  </li>
+	                  <li>
+	                      <a class="admin_list_04" href="/author/authorManage">작가 관리</a>                            
+	                  </li>
+	                  <li>
+	                      <a class="admin_list_05">회원 관리</a>                            
+	                  </li>                
+	                  <li>
+	                      <a class="admin_list_06" href="/book/orderList">주문 현황</a>                            
 	                  </li>	                                                                                               
 	              </ul>
                 </div>

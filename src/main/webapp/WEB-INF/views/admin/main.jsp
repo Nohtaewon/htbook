@@ -38,21 +38,24 @@
                         <li>
                             <a class="admin_list_02">상품 목록</a>
                         </li>
-                        <lI>
+                        <li>
                             <a class="admin_list_03">작가 등록</a>                            
-                        </lI>
-                        <lI>
+                        </li>
+                        <li>
                             <a class="admin_list_04">작가 관리</a>                            
-                        </lI>
-                        <lI>
+                        </li>
+                        <li>
                             <a class="admin_list_05">회원 관리</a>                            
-                        </lI>                                                                                             
+                        </li>                                                                                             
                     </ul>
 					<!-- 
                     <div class="admin_list_01">
                         <a>상품 관리</a>
                     </div>
-                     -->
+                     -->                    
+                     <li>
+	                      <a class="admin_list_06" href="/book/orderList">주문 현황</a>                            
+	                 </li>	
                 </div>
                 <div class="admin_content_wrap">
                     <div>관리자 페이지 입니다.</div>
